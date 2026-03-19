@@ -17,31 +17,34 @@
     const statusMsgs = ["DEPLOYMENT SUCCESSFUL", "NEW BOOKING INITIATED", "PAYMENT VERIFIED", "SQUAD ASSIGNED", "MISSION COMPLETE"];
     const players = ["APEX_VIPER", "APEX_ARYAN", "APEX_GHOST", "APEX_STORM", "APEX_RAVEN"];
 
-    const liveMessage = document.getElementById("live-message");
     let charIndex = 0;
     let currentMessage = "";
 
     function generateRandomMessage() {
-        const type = Math.floor(Math.random() * 3); // Pick between 3 types of messages
-        
+        const type = Math.floor(Math.random() * 3);
         if (type === 0) {
-            // Deployment Message: UID + Service
-            const randomUID = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit UID
+            const randomUID = Math.floor(100000 + Math.random() * 900000);
             const randomService = services[Math.floor(Math.random() * services.length)];
             const randomStatus = statusMsgs[Math.floor(Math.random() * statusMsgs.length)];
             return `${randomStatus}: UID ${randomUID.toString().substring(0,3)}*** - ${randomService}`;
         } else if (type === 1) {
-            // Player Status: Player + Action
             const randomPlayer = players[Math.floor(Math.random() * players.length)];
             return `SQUAD UPDATE: ${randomPlayer} IS NOW READY FOR DEPLOYMENT`;
         } else {
-            // System Stat
-            const winRate = (98 + Math.random() * 1.9).toFixed(2); // Random high win rate like 99.45%
+            const winRate = (98 + Math.random() * 1.9).toFixed(2);
             return `SYSTEM STATUS: CURRENT SQUAD WIN-RATE AT ${winRate}%`;
         }
     }
 
     function typeWriter() {
+        const liveMessage = document.getElementById("live-message");
+        
+        // Safety check: if the element isn't found yet, try again in 100ms
+        if (!liveMessage) {
+            setTimeout(typeWriter, 100);
+            return;
+        }
+
         if (charIndex === 0) {
             currentMessage = generateRandomMessage();
             liveMessage.innerHTML = "";
@@ -50,9 +53,8 @@
         if (charIndex < currentMessage.length) {
             liveMessage.innerHTML += currentMessage.charAt(charIndex);
             charIndex++;
-            setTimeout(typeWriter, 50); // Typing speed
+            setTimeout(typeWriter, 50); 
         } else {
-            // Wait 3 seconds, then reset for a brand new random message
             setTimeout(() => {
                 charIndex = 0;
                 typeWriter();
@@ -60,12 +62,9 @@
         }
     }
 
-    // Initialize the satellite feed
-    window.onload = () => {
-        typeWriter();
-    };
+    // Start immediately
+    typeWriter();
 </script>
-
 <style>
     @keyframes marquee {
         0% { transform: translateX(0); }
