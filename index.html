@@ -152,39 +152,62 @@
         <p class="text-slate-400 text-lg max-w-xl mx-auto">Skip the stress of random teammates. Apex Squads connects you with verified elite players for guaranteed rank progression.</p>
     </section>
 
-    <section id="services" class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8 pb-32">
-        <div class="bg-white/5 p-8 rounded-3xl border border-white/10 gold-glow">
-            <h3 class="text-xl font-bold text-white mb-4">Tactical Duo</h3>
-            <ul class="text-sm text-slate-400 space-y-3 mb-8">
-                <li>• 1 Verified Pro Teammate</li>
-                <li>• Real-time Voice Coordination</li>
-                <li>• Position-based Push</li>
-            </ul>
-            <a href="https://wa.me/918709233294?text=Inquiry:%20Tactical%20Duo" class="block text-center border border-yellow-500 text-yellow-500 py-3 rounded-xl font-bold hover:bg-yellow-500 hover:text-black transition">BOOK MATCH</a>
+   <section id="services" class="py-24 px-6 bg-[#050505] relative overflow-hidden">
+    <div class="max-w-7xl mx-auto mb-16 border-l-8 border-blue-600 pl-6">
+        <h2 class="text-5xl font-black uppercase italic tracking-tighter text-white">Select Mission</h2>
+        <p class="text-blue-500 font-bold tracking-[0.3em] text-xs mt-2 uppercase">Current Combat Operations Available</p>
+    </div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="group relative p-1 bg-blue-900/20 hover:bg-blue-600 transition-colors duration-500 clip-path-polygon">
+            <div class="bg-black p-8 h-full relative overflow-hidden">
+                <div class="absolute -right-8 -top-8 text-blue-900/10 text-9xl font-black italic">01</div>
+                <h3 class="text-2xl font-black text-white italic mb-2 uppercase">Trio Core</h3>
+                <p class="text-slate-500 text-[10px] font-bold tracking-widest mb-6 uppercase">2 Pros + You | Guaranteed Win</p>
+                <div class="text-4xl font-black text-blue-500 mb-8 italic">₹199<span class="text-sm text-slate-600"> / Match</span></div>
+                
+                <button onclick="openBooking('Trio Core', 199)" class="w-full py-4 bg-blue-600 text-white font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all shadow-[0_5px_0_#0033aa] active:translate-y-[5px] active:shadow-none">
+                    Select Loadout
+                </button>
+            </div>
         </div>
 
-        <div class="bg-white/5 p-8 rounded-3xl border-2 border-yellow-500 relative">
-            <span class="absolute -top-3 left-1/2 -translate-x-1/2 bg-yellow-500 text-black text-[10px] font-black px-3 py-1 rounded-full">MOST BOOKED</span>
-            <h3 class="text-xl font-bold text-white mb-4">The Trio Core</h3>
-            <ul class="text-sm text-slate-400 space-y-3 mb-8">
-                <li>• 2 Verified Pro Teammates</li>
-                <li>• Guaranteed Top 5 Finish</li>
-                <li>• Advanced Rotation Strategy</li>
-            </ul>
-            <a href="https://wa.me/918709233294?text=Inquiry:%20Trio%20Core" class="block text-center bg-yellow-500 text-black py-3 rounded-xl font-bold hover:bg-yellow-400">BOOK MATCH</a>
+        <div class="group relative p-1 bg-blue-600 shadow-[0_0_30px_rgba(0,102,255,0.2)]">
+            <div class="bg-black p-8 h-full relative overflow-hidden">
+                <div class="absolute top-0 right-0 bg-blue-600 px-4 py-1 text-[8px] font-black text-white tracking-[0.3em] uppercase">Most Popular</div>
+                <h3 class="text-2xl font-black text-white italic mb-2 uppercase">Duo Push</h3>
+                <p class="text-slate-500 text-[10px] font-bold tracking-widest mb-6 uppercase">1 Pro + You | 24H Rank Push</p>
+                <div class="text-4xl font-black text-blue-500 mb-8 italic">₹499<span class="text-sm text-slate-600"> / Session</span></div>
+                
+                <button onclick="openBooking('Duo Push', 499)" class="w-full py-4 bg-blue-600 text-white font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all shadow-[0_5px_0_#0033aa] active:translate-y-[5px] active:shadow-none">
+                    Select Loadout
+                </button>
+            </div>
         </div>
 
-        <div class="bg-white/5 p-8 rounded-3xl border border-white/10 gold-glow">
-            <h3 class="text-xl font-bold text-white mb-4">Apex Full Squad</h3>
-            <ul class="text-sm text-slate-400 space-y-3 mb-8">
-                <li>• 3 Verified Pro Teammates</li>
-                <li>• Absolute Point Security</li>
-                <li>• Grandmaster Tier Lobby</li>
-            </ul>
-            <a href="https://wa.me/918709233294?text=Inquiry:%20Full%20Squad" class="block text-center border border-yellow-500 text-yellow-500 py-3 rounded-xl font-bold hover:bg-yellow-500 hover:text-black transition">BOOK MATCH</a>
+        <div class="group relative p-1 bg-blue-900/20 hover:bg-blue-600 transition-colors duration-500">
+            <div class="bg-black p-8 h-full relative overflow-hidden">
+                <div class="absolute -right-8 -top-8 text-blue-900/10 text-9xl font-black italic">03</div>
+                <h3 class="text-2xl font-black text-white italic mb-2 uppercase">Full Squad</h3>
+                <p class="text-slate-500 text-[10px] font-bold tracking-widest mb-6 uppercase">3 Pros + You | Tournament Style</p>
+                <div class="text-4xl font-black text-blue-500 mb-8 italic">₹899<span class="text-sm text-slate-600"> / 5 Matches</span></div>
+                
+                <button onclick="openBooking('Full Squad', 899)" class="w-full py-4 bg-blue-600 text-white font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all shadow-[0_5px_0_#0033aa] active:translate-y-[5px] active:shadow-none">
+                    Select Loadout
+                </button>
+            </div>
         </div>
-    </section>
-    
+
+    </div>
+</section>
+
+<style>
+    /* Tactical Cut Effect */
+    .clip-path-polygon {
+        clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
+    }
+</style>
 <section id="apply" class="py-32 px-6 relative bg-black">
     <div class="absolute top-0 right-0 w-32 h-32 opacity-10 pointer-events-none" 
          style="background: repeating-linear-gradient(45deg, #ff0000, #ff0000 10px, transparent 10px, transparent 20px);">
