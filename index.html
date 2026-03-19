@@ -152,53 +152,73 @@
         <p class="text-slate-400 text-lg max-w-xl mx-auto">Skip the stress of random teammates. Apex Squads connects you with verified elite players for guaranteed rank progression.</p>
     </section>
 
-   <section id="services" class="py-24 px-6 bg-[#050505] relative overflow-hidden">
-    <div class="max-w-7xl mx-auto mb-16 border-l-8 border-blue-600 pl-6">
-        <h2 class="text-5xl font-black uppercase italic tracking-tighter text-white">Select Mission</h2>
-        <p class="text-blue-500 font-bold tracking-[0.3em] text-xs mt-2 uppercase">Current Combat Operations Available</p>
-    </div>
-
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+ <section id="services" class="py-24 px-6 bg-[#050505]">
+    <div class="max-w-7xl mx-auto">
         
-        <div class="group relative p-1 bg-blue-900/20 hover:bg-blue-600 transition-colors duration-500 clip-path-polygon">
-            <div class="bg-black p-8 h-full relative overflow-hidden">
-                <div class="absolute -right-8 -top-8 text-blue-900/10 text-9xl font-black italic">01</div>
-                <h3 class="text-2xl font-black text-white italic mb-2 uppercase">Trio Core</h3>
-                <p class="text-slate-500 text-[10px] font-bold tracking-widest mb-6 uppercase">2 Pros + You | Guaranteed Win</p>
-                <div class="text-4xl font-black text-blue-500 mb-8 italic">₹199<span class="text-sm text-slate-600"> / Match</span></div>
-                
-                <button onclick="openBooking('Trio Core', 199)" class="w-full py-4 bg-blue-600 text-white font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all shadow-[0_5px_0_#0033aa] active:translate-y-[5px] active:shadow-none">
-                    Select Loadout
-                </button>
-            </div>
+        <div class="border-l-8 border-blue-600 pl-6 mb-16">
+            <h2 class="text-5xl font-black uppercase italic tracking-tighter text-white">Mission Packs</h2>
+            <p class="text-blue-500 font-bold tracking-[0.3em] text-[10px] mt-2 uppercase">Select your Rank Objective</p>
         </div>
 
-        <div class="group relative p-1 bg-blue-600 shadow-[0_0_30px_rgba(0,102,255,0.2)]">
-            <div class="bg-black p-8 h-full relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-blue-600 px-4 py-1 text-[8px] font-black text-white tracking-[0.3em] uppercase">Most Popular</div>
-                <h3 class="text-2xl font-black text-white italic mb-2 uppercase">Duo Push</h3>
-                <p class="text-slate-500 text-[10px] font-bold tracking-widest mb-6 uppercase">1 Pro + You | 24H Rank Push</p>
-                <div class="text-4xl font-black text-blue-500 mb-8 italic">₹499<span class="text-sm text-slate-600"> / Session</span></div>
-                
-                <button onclick="openBooking('Duo Push', 499)" class="w-full py-4 bg-blue-600 text-white font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all shadow-[0_5px_0_#0033aa] active:translate-y-[5px] active:shadow-none">
-                    Select Loadout
-                </button>
-            </div>
+        <div class="flex flex-wrap gap-4 mb-10">
+            <button onclick="filterPacks('all')" class="px-8 py-3 bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest clip-path-polygon">All Ops</button>
+            <button onclick="filterPacks('rank')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Rank Points</button>
+            <button onclick="filterPacks('matches')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Match Packs</button>
         </div>
 
-        <div class="group relative p-1 bg-blue-900/20 hover:bg-blue-600 transition-colors duration-500">
-            <div class="bg-black p-8 h-full relative overflow-hidden">
-                <div class="absolute -right-8 -top-8 text-blue-900/10 text-9xl font-black italic">03</div>
-                <h3 class="text-2xl font-black text-white italic mb-2 uppercase">Full Squad</h3>
-                <p class="text-slate-500 text-[10px] font-bold tracking-widest mb-6 uppercase">3 Pros + You | Tournament Style</p>
-                <div class="text-4xl font-black text-blue-500 mb-8 italic">₹899<span class="text-sm text-slate-600"> / 5 Matches</span></div>
-                
-                <button onclick="openBooking('Full Squad', 899)" class="w-full py-4 bg-blue-600 text-white font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all shadow-[0_5px_0_#0033aa] active:translate-y-[5px] active:shadow-none">
-                    Select Loadout
-                </button>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pack-container">
+            
+            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-blue-500 font-black text-[10px] tracking-widest">RANK PUSH</span>
+                    <span class="bg-blue-600 text-white px-2 py-0.5 text-[8px] font-black italic">FAST TRACK</span>
+                </div>
+                <h3 class="text-2xl font-black text-white uppercase italic">+500 Rank Points</h3>
+                <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase">Guaranteed Points | No-Ban Protection</p>
+                <div class="mt-8 flex items-end justify-between">
+                    <div class="text-3xl font-black text-white italic">₹249</div>
+                    <button onclick="openBooking('500 RP Push', 249)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
+                </div>
             </div>
-        </div>
 
+            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-blue-500 font-black text-[10px] tracking-widest">ELITE OPS</span>
+                    <span class="bg-red-600 text-white px-2 py-0.5 text-[8px] font-black italic">HOT SALE</span>
+                </div>
+                <h3 class="text-2xl font-black text-white uppercase italic">+1000 Rank Points</h3>
+                <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase">Full Squad Support | Instant Start</p>
+                <div class="mt-8 flex items-end justify-between">
+                    <div class="text-3xl font-black text-white italic">₹449</div>
+                    <button onclick="openBooking('1000 RP Push', 449)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
+                </div>
+            </div>
+
+            <div class="pack-item matches bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-blue-500 font-black text-[10px] tracking-widest">MATCH PACK</span>
+                </div>
+                <h3 class="text-2xl font-black text-white uppercase italic">5 Booyah Pack</h3>
+                <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase">Standard Matches | Duo/Trio Choice</p>
+                <div class="mt-8 flex items-end justify-between">
+                    <div class="text-3xl font-black text-white italic">₹179</div>
+                    <button onclick="openBooking('5 Booyah Pack', 179)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
+                </div>
+            </div>
+
+            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all border-blue-600/30">
+                <div class="flex justify-between items-start mb-6">
+                    <span class="text-yellow-500 font-black text-[10px] tracking-widest">GRANDMASTER ONLY</span>
+                </div>
+                <h3 class="text-2xl font-black text-white uppercase italic">Heroic to GM</h3>
+                <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase">Unlimited Matches Until Reached</p>
+                <div class="mt-8 flex items-end justify-between">
+                    <div class="text-3xl font-black text-white italic">₹1499</div>
+                    <button onclick="openBooking('Heroic to GM', 1499)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
+                </div>
+            </div>
+
+        </div>
     </div>
 </section>
 
