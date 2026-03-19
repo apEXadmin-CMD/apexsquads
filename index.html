@@ -160,11 +160,13 @@
             <p class="text-blue-500 font-bold tracking-[0.3em] text-[10px] mt-2 uppercase">Select your Rank Objective</p>
         </div>
 
-        <div class="flex flex-wrap gap-4 mb-10">
-            <button onclick="filterPacks('all')" class="px-8 py-3 bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest clip-path-polygon">All Ops</button>
-            <button onclick="filterPacks('rank')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Rank Points</button>
-            <button onclick="filterPacks('matches')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Match Packs</button>
-        </div>
+       <div class="flex flex-wrap gap-4 mb-10">
+    <button onclick="filterPacks('all')" class="px-8 py-3 bg-blue-600 text-white font-black text-[10px] uppercase tracking-widest">All Ops</button>
+    <button onclick="filterPacks('rank')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Rank Points</button>
+    <button onclick="filterPacks('duo')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Duo Packs</button>
+    <button onclick="filterPacks('trio')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Trio Squad</button>
+    <button onclick="filterPacks('squad')" class="px-8 py-3 bg-[#111] text-slate-500 font-black text-[10px] uppercase tracking-widest hover:text-blue-500 transition border border-white/5">Full Squad</button>
+</div>
 
        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pack-container">
     
@@ -243,6 +245,43 @@
             <div class="text-3xl font-black text-white italic">₹299</div>
             <button onclick="openBooking('5 Trio Booyahs', 299)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
         </div>
+        <div class="pack-item matches squad bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+    <div class="flex justify-between items-start mb-6">
+        <span class="text-red-500 font-black text-[10px] tracking-widest uppercase">Full Squad Ops</span>
+        <span class="bg-red-600 text-white px-2 py-0.5 text-[8px] font-black italic">ELITE PROTECTION</span>
+    </div>
+    <h3 class="text-2xl font-black text-white uppercase italic">3 Squad Booyahs</h3>
+    <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase italic tracking-widest">3 Pros + You | Guaranteed Wins</p>
+    <div class="mt-8 flex items-end justify-between">
+        <div class="text-3xl font-black text-white italic">₹249</div>
+        <button onclick="openBooking('3 Squad Booyahs', 249)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
+    </div>
+</div>
+
+<div class="pack-item matches squad bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all border-blue-600/40">
+    <div class="flex justify-between items-start mb-6">
+        <span class="text-red-500 font-black text-[10px] tracking-widest uppercase">Full Squad Ops</span>
+        <span class="bg-white text-black px-2 py-0.5 text-[8px] font-black italic">BEST VALUE</span>
+    </div>
+    <h3 class="text-2xl font-black text-white uppercase italic">10 Squad Booyahs</h3>
+    <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase italic tracking-widest">Full Session | High Kill Gameplay</p>
+    <div class="mt-8 flex items-end justify-between">
+        <div class="text-3xl font-black text-white italic">₹699</div>
+        <button onclick="openBooking('10 Squad Booyahs', 699)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
+    </div>
+</div>
+
+<div class="pack-item matches squad bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all border-red-600/30">
+    <div class="flex justify-between items-start mb-6">
+        <span class="text-red-500 font-black text-[10px] tracking-widest uppercase">Tournament Grade</span>
+    </div>
+    <h3 class="text-2xl font-black text-white uppercase italic">1 Day Unlimited</h3>
+    <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase italic tracking-widest">3 Pros | Play All Day | Max Points</p>
+    <div class="mt-8 flex items-end justify-between">
+        <div class="text-3xl font-black text-white italic">₹1299</div>
+        <button onclick="openBooking('1 Day Squad Unlimited', 1299)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button>
+    </div>
+</div>
     </div>
 
 </div>
