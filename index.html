@@ -475,18 +475,33 @@ function submitApplication() {
     <footer class="py-10 text-center text-slate-600 text-[10px] tracking-[0.3em]">
         © 2026 APEX SQUADS | BUILT FOR THE HIGHEST RANK
     </footer>
-function filterPacks(category) {
-    const packs = document.querySelectorAll('.pack-item');
-    
-    packs.forEach(pack => {
-        if (category === 'all') {
-            pack.style.display = 'block';
-        } else if (pack.classList.contains(category)) {
-            pack.style.display = 'block';
-        } else {
-            pack.style.display = 'none';
-        }
-    });
-}
+<script>
+    function filterPacks(category) {
+        // 1. Get all mission packs
+        const packs = document.querySelectorAll('.pack-item');
+        // 2. Get all filter buttons to update their style
+        const buttons = document.querySelectorAll('#services button[onclick^="filterPacks"]');
+        
+        // Update button visual state
+        buttons.forEach(btn => {
+            btn.classList.remove('bg-blue-600', 'text-white');
+            btn.classList.add('bg-[#111]', 'text-slate-500');
+        });
+        
+        // Highlight the clicked button (optional but looks pro)
+        event.currentTarget.classList.add('bg-blue-600', 'text-white');
+
+        // 3. Logic to hide/show packs
+        packs.forEach(pack => {
+            if (category === 'all') {
+                pack.style.display = 'block';
+            } else if (pack.classList.contains(category)) {
+                pack.style.display = 'block';
+            } else {
+                pack.style.display = 'none';
+            }
+        });
+    }
+</script>
 </body>
 </html>
