@@ -11,38 +11,60 @@
     </style>
 </head>
 <body class="bg-apex text-slate-200 font-sans">
-<div class="bg-yellow-500 overflow-hidden py-2 border-b border-black/10">
-    <div class="flex whitespace-nowrap animate-marquee items-center">
-        <div id="ticker-content" class="flex space-x-12 items-center">
-            <span class="flex items-center space-x-2 text-[10px] font-black text-black uppercase tracking-[0.2em]">
-                <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
-                <span>LIVE FEED: DEPLOYMENT SUCCESSFUL - UID 455*** - TRIO CORE</span>
-            </span>
-            <span class="flex items-center space-x-2 text-[10px] font-black text-black uppercase tracking-[0.2em]">
-                <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
-                <span>NEW BOOKING: DUO PUSH INITIATED - UID 892***</span>
-            </span>
-            <span class="flex items-center space-x-2 text-[10px] font-black text-black uppercase tracking-[0.2em]">
-                <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
-                <span>PRO RECRUITED: APEX_VIPER JOINED THE SQUAD</span>
-            </span>
-            <span class="flex items-center space-x-2 text-[10px] font-black text-black uppercase tracking-[0.2em]">
-                <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
-                <span>SYSTEM STATUS: ALL PROS ONLINE - 99.9% WIN RATE</span>
-            </span>
-        </div>
-        <div class="flex space-x-12 items-center ml-12" aria-hidden="true">
-            <span class="flex items-center space-x-2 text-[10px] font-black text-black uppercase tracking-[0.2em]">
-                <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
-                <span>LIVE FEED: DEPLOYMENT SUCCESSFUL - UID 455*** - TRIO CORE</span>
-            </span>
-            <span class="flex items-center space-x-2 text-[10px] font-black text-black uppercase tracking-[0.2em]">
-                <span class="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse"></span>
-                <span>NEW BOOKING: DUO PUSH INITIATED - UID 892***</span>
-            </span>
-        </div>
-    </div>
-</div>
+<script>
+    // Configuration for Random Generation
+    const services = ["TRIO CORE", "DUO PUSH", "APEX FULL SQUAD", "PLACEMENT MATCHES", "HEROIC RANK UP", "GRANDMASTER PUSH"];
+    const statusMsgs = ["DEPLOYMENT SUCCESSFUL", "NEW BOOKING INITIATED", "PAYMENT VERIFIED", "SQUAD ASSIGNED", "MISSION COMPLETE"];
+    const players = ["APEX_VIPER", "APEX_ARYAN", "APEX_GHOST", "APEX_STORM", "APEX_RAVEN"];
+
+    const liveMessage = document.getElementById("live-message");
+    let charIndex = 0;
+    let currentMessage = "";
+
+    function generateRandomMessage() {
+        const type = Math.floor(Math.random() * 3); // Pick between 3 types of messages
+        
+        if (type === 0) {
+            // Deployment Message: UID + Service
+            const randomUID = Math.floor(100000 + Math.random() * 900000); // Generates a 6-digit UID
+            const randomService = services[Math.floor(Math.random() * services.length)];
+            const randomStatus = statusMsgs[Math.floor(Math.random() * statusMsgs.length)];
+            return `${randomStatus}: UID ${randomUID.toString().substring(0,3)}*** - ${randomService}`;
+        } else if (type === 1) {
+            // Player Status: Player + Action
+            const randomPlayer = players[Math.floor(Math.random() * players.length)];
+            return `SQUAD UPDATE: ${randomPlayer} IS NOW READY FOR DEPLOYMENT`;
+        } else {
+            // System Stat
+            const winRate = (98 + Math.random() * 1.9).toFixed(2); // Random high win rate like 99.45%
+            return `SYSTEM STATUS: CURRENT SQUAD WIN-RATE AT ${winRate}%`;
+        }
+    }
+
+    function typeWriter() {
+        if (charIndex === 0) {
+            currentMessage = generateRandomMessage();
+            liveMessage.innerHTML = "";
+        }
+
+        if (charIndex < currentMessage.length) {
+            liveMessage.innerHTML += currentMessage.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWriter, 50); // Typing speed
+        } else {
+            // Wait 3 seconds, then reset for a brand new random message
+            setTimeout(() => {
+                charIndex = 0;
+                typeWriter();
+            }, 3000);
+        }
+    }
+
+    // Initialize the satellite feed
+    window.onload = () => {
+        typeWriter();
+    };
+</script>
 
 <style>
     @keyframes marquee {
