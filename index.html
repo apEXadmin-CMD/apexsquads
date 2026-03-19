@@ -475,6 +475,18 @@ function submitApplication() {
     <footer class="py-10 text-center text-slate-600 text-[10px] tracking-[0.3em]">
         © 2026 APEX SQUADS | BUILT FOR THE HIGHEST RANK
     </footer>
-
+function filterPacks(category) {
+    const packs = document.querySelectorAll('.pack-item');
+    
+    packs.forEach(pack => {
+        if (category === 'all') {
+            pack.style.display = 'block';
+        } else if (pack.classList.contains(category)) {
+            pack.style.display = 'block';
+        } else {
+            pack.style.display = 'none';
+        }
+    });
+}
 </body>
 </html>
