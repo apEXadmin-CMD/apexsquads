@@ -260,32 +260,32 @@ function submitApplication() {
         </div>
     </div>
 </section>
-   <section id="roster" class="max-w-6xl mx-auto py-20 px-6">
-    <div class="flex justify-between items-end mb-12">
+<section id="roster" class="max-w-7xl mx-auto py-24 px-6 relative">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
         <div>
-            <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Command Center</h2>
-            <p class="text-slate-500 text-sm mt-2">Live status of the Apex Pro Roster.</p>
+            <h2 class="text-4xl font-black text-white italic uppercase tracking-tighter">Command Center</h2>
+            <p class="text-blue-400/60 text-sm font-bold tracking-widest mt-2 uppercase">Live status of the Apex Pro Roster.</p>
         </div>
-        <div id="sync-status" class="text-[10px] text-slate-600 font-black tracking-widest uppercase">SYNCED WITH HQ</div>
+        <div id="sync-status" class="px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] text-blue-400 font-black tracking-[0.3em] uppercase animate-pulse">
+            SATELLITE SYNC: ACTIVE
+        </div>
     </div>
 
-    <div id="roster-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div class="text-slate-500 animate-pulse">Initializing Satellite Link...</div>
-    </div>
+    <div id="roster-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        </div>
 </section>
 
 <script>
-    // PASTE YOUR GOOGLE SHEET CSV LINK HERE
-    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRMUb3ZaZXQW1sZLKT7ooWqVnTbdDnh5FS4pBtsQ7RU0YCMgx-kTgHGFLgSPdjVK4uV90eqAM2tk44/pub?output=csv";
+    // YOUR PUBLISHED GOOGLE SHEET CSV LINK
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRMUb3ZaZXQW1sZLKT7ooWqVnTbdDnh5FS4pBtsQ7RU0YCMgx-kTgHGFLgSPdjVK4uV90eqAM2tk44/pubhtml"; 
 
     async function loadRoster() {
         try {
             const response = await fetch(SHEET_URL);
             const data = await response.text();
-            const rows = data.split("\n").slice(1); // Skip the header row
-            
+            const rows = data.split("\n").slice(1);
             const grid = document.getElementById("roster-grid");
-            grid.innerHTML = ""; // Clear the loading text
+            grid.innerHTML = "";
 
             rows.forEach(row => {
                 const cols = row.split(",");
@@ -295,29 +295,44 @@ function submitApplication() {
                 const isOnline = status.trim().toUpperCase() === "ONLINE";
                 
                 const card = `
-                    <div class="bg-white/5 border border-white/10 rounded-[32px] p-6 hover:border-yellow-500/50 transition-all group">
-                        <div class="relative aspect-square rounded-2xl bg-slate-800 mb-6 overflow-hidden border border-white/5">
-                            <img src="img/${image.trim()}" class="w-full h-full object-cover ${isOnline ? '' : 'grayscale'}">
-                            <div class="absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-black tracking-widest ${isOnline ? 'bg-green-500 text-black' : 'bg-slate-700 text-slate-400'}">
-                                ${status.toUpperCase()}
+                    <div class="group relative bg-white/[0.03] backdrop-blur-xl border border-white/10 rounded-[45px] p-8 hover:border-blue-500/50 hover:bg-white/[0.07] transition-all duration-500 shadow-2xl">
+                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-600/10 blur-[50px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div class="relative aspect-square rounded-[32px] bg-slate-900/50 mb-8 overflow-hidden border border-white/5 ring-1 ring-white/10 shadow-inner">
+                            <img src="img/${image.trim()}" class="w-full h-full object-cover transition-all duration-700 ${isOnline ? 'group-hover:scale-110' : 'grayscale opacity-50'}">
+                            
+                            <div class="absolute top-5 right-5 px-4 py-1.5 rounded-full text-[9px] font-black tracking-[0.2em] backdrop-blur-md border ${isOnline ? 'bg-green-500/20 border-green-500/30 text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.3)]' : 'bg-slate-900/50 border-white/10 text-slate-500'}">
+                                ${isOnline ? '● ONLINE' : '○ OFFLINE'}
                             </div>
                         </div>
-                        <h3 class="text-xl font-bold text-white uppercase italic">${name}</h3>
-                        <p class="text-yellow-500 text-[10px] font-black tracking-widest uppercase mb-6">${role}</p>
-                        <a href="#services" class="block w-full text-center py-3 ${isOnline ? 'bg-yellow-500 text-black' : 'bg-white/5 text-slate-500 pointer-events-none'} rounded-xl text-xs font-bold transition-all">
-                            ${isOnline ? 'RESERVE SLOT' : 'OFFLINE'}
+
+                        <div class="space-y-1 mb-8">
+                            <h3 class="text-2xl font-black text-white uppercase italic tracking-tighter">${name}</h3>
+                            <p class="text-blue-500 text-[10px] font-black tracking-[0.4em] uppercase">${role}</p>
+                        </div>
+
+                        <a href="#services" class="relative overflow-hidden block w-full text-center py-4 rounded-2xl text-[11px] font-black tracking-[0.2em] uppercase transition-all duration-300 
+                            ${isOnline ? 'bg-blue-600 text-white hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] hover:-translate-y-1' : 'bg-white/5 text-slate-600 pointer-events-none border border-white/5'}">
+                            <span class="relative z-10">${isOnline ? 'Initiate Deployment' : 'System Locked'}</span>
+                            ${isOnline ? '<div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite]"></div>' : ''}
                         </a>
                     </div>
                 `;
                 grid.innerHTML += card;
             });
         } catch (error) {
-            console.error("Error loading roster:", error);
+            console.error("Link Error:", error);
         }
     }
 
     loadRoster();
 </script>
+
+<style>
+    @keyframes shimmer {
+        100% { transform: translateX(100%); }
+    }
+</style>
     <section class="max-w-6xl mx-auto py-20 px-6">
     <h2 class="text-2xl font-black text-white mb-8 italic uppercase tracking-widest text-center">Live Operations Proof</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
