@@ -10,26 +10,48 @@
         .bg-apex { background: linear-gradient(135deg, #0f172a 0%, #020617 100%); }
     </style>
 </head>
-<body class="bg-apex text-slate-200 font-sans">
-<div class="bg-yellow-500 py-2 border-b border-black/10">
-    <div class="max-w-6xl mx-auto px-6 flex items-center space-x-3">
-        <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
-        </span>
+<header class="bg-black border-b border-white/5 sticky top-0 z-50">
+    <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         
-        <div class="text-[10px] font-black text-black uppercase tracking-[0.2em] font-mono flex items-center">
-            <span class="opacity-50 mr-2">SATELLITE LINK:</span>
-            <span id="live-message" class="border-r-2 border-black pr-1 animate-pulse min-h-[1rem] inline-block">INITIALIZING...</span>
+        <div class="flex items-center space-x-2">
+            <div class="w-2 h-8 bg-blue-600 rounded-full mr-2"></div>
+            <h1 class="text-2xl font-black italic tracking-tighter text-blue-500 uppercase font-mono">
+                APEX <span class="text-white">SQUADS</span>
+            </h1>
+        </div>
+
+        <div class="flex items-center space-x-6">
+            <div class="hidden md:flex space-x-8 text-[10px] font-black tracking-[0.2em] text-slate-400">
+                <a href="#services" class="hover:text-blue-500 transition">SERVICES</a>
+                <a href="#roster" class="hover:text-blue-500 transition">ROSTER</a>
+                <a href="#apply" class="hover:text-blue-500 transition">JOIN TEAM</a>
+            </div>
+            
+            <a href="#services" class="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black px-6 py-3 rounded-full uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20">
+                Book Squad
+            </a>
+        </div>
+    </nav>
+
+    <div class="bg-blue-600/10 py-2 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-6 flex items-center space-x-3">
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-500 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            <div class="text-[9px] font-bold text-blue-400 uppercase tracking-[0.3em] font-mono flex items-center">
+                <span class="opacity-50 mr-2">SYS_LINK:</span>
+                <span id="live-message" class="border-r-2 border-blue-500 pr-1 animate-pulse inline-block min-h-[10px]">INITIALIZING...</span>
+            </div>
         </div>
     </div>
-</div>
+</header>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const services = ["TRIO CORE", "DUO PUSH", "APEX FULL SQUAD", "PLACEMENT MATCHES", "HEROIC RANK UP", "GRANDMASTER PUSH"];
-    const statusMsgs = ["DEPLOYMENT SUCCESSFUL", "NEW BOOKING INITIATED", "PAYMENT VERIFIED", "SQUAD ASSIGNED", "MISSION COMPLETE"];
-    const players = ["APEX_VIPER", "APEX_ARYAN", "APEX_GHOST", "APEX_STORM", "APEX_RAVEN"];
+    const services = ["TRIO CORE", "DUO PUSH", "APEX FULL SQUAD", "PLACEMENT", "GRANDMASTER"];
+    const statusMsgs = ["DEPLOYMENT SUCCESS", "BOOKING VERIFIED", "SQUAD ASSIGNED", "MISSION COMPLETE"];
+    const players = ["APEX_VIPER", "APEX_ARYAN", "APEX_GHOST", "APEX_STORM"];
 
     const liveMessage = document.getElementById("live-message");
     let charIndex = 0;
@@ -38,27 +60,21 @@ document.addEventListener("DOMContentLoaded", function() {
     function generateRandomMessage() {
         const type = Math.floor(Math.random() * 3);
         if (type === 0) {
-            const randomUID = Math.floor(100000 + Math.random() * 900000);
-            const service = services[Math.floor(Math.random() * services.length)];
-            const status = statusMsgs[Math.floor(Math.random() * statusMsgs.length)];
-            return `${status}: UID ${randomUID.toString().substring(0,3)}*** - ${service}`;
+            const uid = Math.floor(100000 + Math.random() * 900000);
+            return `${statusMsgs[Math.floor(Math.random() * statusMsgs.length)]}: UID ${uid.toString().substring(0,3)}*** - ${services[Math.floor(Math.random() * services.length)]}`;
         } else if (type === 1) {
-            const player = players[Math.floor(Math.random() * players.length)];
-            return `SQUAD UPDATE: ${player} IS NOW READY FOR DEPLOYMENT`;
+            return `SQUAD UPDATE: ${players[Math.floor(Math.random() * players.length)]} IS READY`;
         } else {
-            const winRate = (98 + Math.random() * 1.9).toFixed(2);
-            return `SYSTEM STATUS: CURRENT SQUAD WIN-RATE AT ${winRate}%`;
+            return `SYSTEM STATUS: WIN-RATE AT ${(98 + Math.random() * 1.9).toFixed(2)}%`;
         }
     }
 
     function typeWriter() {
-        if (!liveMessage) return; // Exit if element doesn't exist
-
+        if (!liveMessage) return;
         if (charIndex === 0) {
             currentMessage = generateRandomMessage();
             liveMessage.innerHTML = "";
         }
-
         if (charIndex < currentMessage.length) {
             liveMessage.innerHTML += currentMessage.charAt(charIndex);
             charIndex++;
@@ -67,14 +83,12 @@ document.addEventListener("DOMContentLoaded", function() {
             setTimeout(() => {
                 charIndex = 0;
                 typeWriter();
-            }, 3500); // Pause for 3.5 seconds before next message
+            }, 3000);
         }
     }
-
-    // Start the machine
     typeWriter();
 });
-</script>
+</script>t>
     </nav>
 
     <section class="max-w-4xl mx-auto pt-24 pb-20 px-6 text-center">
