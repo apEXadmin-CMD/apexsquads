@@ -11,12 +11,27 @@
     </style>
 </head>
 <body class="bg-apex text-slate-200 font-sans">
+<div class="bg-yellow-500 py-2 border-b border-black/10">
+    <div class="max-w-6xl mx-auto px-6 flex items-center space-x-3">
+        <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-600 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+        </span>
+        
+        <div class="text-[10px] font-black text-black uppercase tracking-[0.2em] font-mono flex items-center">
+            <span class="opacity-50 mr-2">SATELLITE LINK:</span>
+            <span id="live-message" class="border-r-2 border-black pr-1 animate-pulse min-h-[1rem] inline-block">INITIALIZING...</span>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Configuration for Random Generation
+document.addEventListener("DOMContentLoaded", function() {
     const services = ["TRIO CORE", "DUO PUSH", "APEX FULL SQUAD", "PLACEMENT MATCHES", "HEROIC RANK UP", "GRANDMASTER PUSH"];
     const statusMsgs = ["DEPLOYMENT SUCCESSFUL", "NEW BOOKING INITIATED", "PAYMENT VERIFIED", "SQUAD ASSIGNED", "MISSION COMPLETE"];
-    const players = ["MR.GULLU", "DARKKING", "KNIGHT", "APEXKNIGHT", "APEX_RAVEN"];
+    const players = ["APEX_VIPER", "APEX_ARYAN", "APEX_GHOST", "APEX_STORM", "APEX_RAVEN"];
 
+    const liveMessage = document.getElementById("live-message");
     let charIndex = 0;
     let currentMessage = "";
 
@@ -24,12 +39,12 @@
         const type = Math.floor(Math.random() * 3);
         if (type === 0) {
             const randomUID = Math.floor(100000 + Math.random() * 900000);
-            const randomService = services[Math.floor(Math.random() * services.length)];
-            const randomStatus = statusMsgs[Math.floor(Math.random() * statusMsgs.length)];
-            return `${randomStatus}: UID ${randomUID.toString().substring(0,3)}*** - ${randomService}`;
+            const service = services[Math.floor(Math.random() * services.length)];
+            const status = statusMsgs[Math.floor(Math.random() * statusMsgs.length)];
+            return `${status}: UID ${randomUID.toString().substring(0,3)}*** - ${service}`;
         } else if (type === 1) {
-            const randomPlayer = players[Math.floor(Math.random() * players.length)];
-            return `SQUAD UPDATE: ${randomPlayer} IS NOW READY FOR DEPLOYMENT`;
+            const player = players[Math.floor(Math.random() * players.length)];
+            return `SQUAD UPDATE: ${player} IS NOW READY FOR DEPLOYMENT`;
         } else {
             const winRate = (98 + Math.random() * 1.9).toFixed(2);
             return `SYSTEM STATUS: CURRENT SQUAD WIN-RATE AT ${winRate}%`;
@@ -37,13 +52,7 @@
     }
 
     function typeWriter() {
-        const liveMessage = document.getElementById("live-message");
-        
-        // Safety check: if the element isn't found yet, try again in 100ms
-        if (!liveMessage) {
-            setTimeout(typeWriter, 100);
-            return;
-        }
+        if (!liveMessage) return; // Exit if element doesn't exist
 
         if (charIndex === 0) {
             currentMessage = generateRandomMessage();
@@ -53,37 +62,19 @@
         if (charIndex < currentMessage.length) {
             liveMessage.innerHTML += currentMessage.charAt(charIndex);
             charIndex++;
-            setTimeout(typeWriter, 50); 
+            setTimeout(typeWriter, 40); 
         } else {
             setTimeout(() => {
                 charIndex = 0;
                 typeWriter();
-            }, 3000);
+            }, 3500); // Pause for 3.5 seconds before next message
         }
     }
 
-    // Start immediately
+    // Start the machine
     typeWriter();
+});
 </script>
-<style>
-    @keyframes marquee {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    .animate-marquee {
-        animation: marquee 30s linear infinite;
-    }
-    .animate-marquee:hover {
-        animation-play-state: paused;
-    }
-</style>
-    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
-        <div class="hidden md:block space-x-8 text-xs font-bold tracking-widest uppercase">
-    <a href="#services" class="hover:text-yellow-500 transition">BOOK NOW</a>
-    <a href="#roster" class="hover:text-yellow-500 transition">ROSTER</a>
-    <a href="#apply" class="hover:text-yellow-500 transition">JOIN AS TEAM</a>
-</div>
-       
     </nav>
 
     <section class="max-w-4xl mx-auto pt-24 pb-20 px-6 text-center">
