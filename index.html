@@ -304,70 +304,52 @@ function submitApplication() {
         </div>
     </div>
 </section>
-<style>
-    :root {
-        --apex-blue: #0066ff;
-        --apex-dark: #0a0a0a;
-        --apex-gray: #1a1a1a;
-        --apex-border: #333333;
-    }
+<section id="roster" class="max-w-7xl mx-auto py-20 px-6">
+    <div class="border-l-8 border-blue-600 pl-6 mb-12">
+        <h2 class="text-5xl font-black uppercase italic tracking-tighter">Combat Roster</h2>
+        <p class="text-blue-500 font-bold tracking-[0.3em] text-xs mt-2">SQUAD STATUS: ACTIVE OPERATIONS</p>
+    </div>
 
-    body {
-        background-color: var(--apex-dark);
-        /* Carbon Fiber Pattern */
-        background-image: 
-            radial-gradient(circle at 2px 2px, var(--apex-gray) 1px, transparent 0);
-        background-size: 24px 24px;
-        color: white;
-        font-family: 'Inter', sans-serif;
-    }
+    <div id="roster-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        </div>
+</section>
 
-    .pro-card {
-        background: var(--apex-gray);
-        border: 2px solid var(--apex-border);
-        border-radius: 0px; /* Sharp edges for a "tactical" look */
-        clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%); /* Cut corner effect */
-        transition: all 0.3s ease;
-    }
+<script>
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRMUb3ZaZXQW1sZLKT7ooWqVnTbdDnh5FS4pBtsQ7RU0YCMgx-kTgHGFLgSPdjVK4uV90eqAM2tk44/pub?output=csv"; 
 
-    .pro-card:hover {
-        border-color: var(--apex-blue);
-        transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2);
-    }
+    async function loadRoster() {
+        const response = await fetch(SHEET_URL);
+        const data = await response.text();
+        const rows = data.split("\n").slice(1);
+        const grid = document.getElementById("roster-grid");
+        grid.innerHTML = "";
 
-    .btn-apex {
-        background: var(--apex-blue);
-        color: white;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-        transition: 0.3s;
+        rows.forEach(row => {
+            const [name, role, status, image] = row.split(",");
+            const isOnline = status.trim().toUpperCase() === "ONLINE";
+            
+            grid.innerHTML += `
+                <div class="pro-card p-1">
+                    <div class="bg-black p-6 h-full">
+                        <div class="relative mb-6 border-b-4 border-blue-600">
+                            <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}">
+                            <div class="absolute bottom-0 right-0 bg-blue-600 px-4 py-1 text-[10px] font-black uppercase">
+                                ${status.toUpperCase()}
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-black italic mb-1 uppercase">${name}</h3>
+                        <p class="text-slate-500 text-xs font-bold tracking-widest uppercase mb-8">${role}</p>
+                        
+                        <a href="#services" class="btn-apex block w-full py-4 text-center text-sm">
+                            ${isOnline ? 'Deploy Now' : 'Locked'}
+                        </a>
+                    </div>
+                </div>
+            `;
+        });
     }
-
-    .btn-apex:hover {
-        background: white;
-        color: var(--apex-blue);
-        transform: scale(1.05);
-    }
-</style>
-<style>
-    @keyframes shimmer {
-        100% { transform: translateX(100%); }
-    }
-</style>
-
-<style>
-    @keyframes shimmer {
-        100% { transform: translateX(100%); }
-    }
-</style>
-<style>
-    @keyframes shimmer {
-        100% { transform: translateX(100%); }
-    }
-</style>
+    loadRoster();
+</script>
     <section class="max-w-6xl mx-auto py-20 px-6">
     <h2 class="text-2xl font-black text-white mb-8 italic uppercase tracking-widest text-center">Live Operations Proof</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
