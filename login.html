@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authorize | Apex Squads HQ</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; }
+        .font-gaming { font-family: 'Orbitron', sans-serif; }
+        /* Professional UI for Clerk's Box */
+        #sign-in { display: flex; justify-content: center; padding-top: 50px; }
+    </style>
+</head>
+<body class="bg-black flex flex-col items-center justify-center min-h-screen">
+
+    <div class="text-center mb-10">
+        <div class="font-gaming text-3xl italic tracking-tighter mb-2">
+            APEX<span class="text-blue-600">SQUADS</span>
+        </div>
+        <p class="text-[8px] text-blue-500 uppercase tracking-[0.5em]">Identity Verification Protocol</p>
+    </div>
+
+    <div id="sign-in"></div>
+
+    <script
+      async
+      crossorigin="anonymous"
+      data-clerk-publishable-key="pk_test_c3RpcnJlZC1lbGVwaGFudC0zNy5jbGVyay5hY2NvdW50cy5kZXYk"
+      src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+      type="text/javascript"
+    ></script>
+
+    <script>
+      window.addEventListener('load', async function () {
+        await Clerk.load();
+
+        if (Clerk.user) {
+          // If already logged in, send them to the Home Page
+          window.location.href = "index.html";
+        } else {
+          // If not logged in, show the professional Sign-In box
+          Clerk.mountSignIn(document.getElementById('sign-in'));
+        }
+      });
+    </script>
+
+</body>
+</html>
