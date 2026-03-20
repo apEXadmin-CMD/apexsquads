@@ -72,10 +72,23 @@
     await Clerk.load();
     const applyBtn = document.getElementById('apply-btn');
     const loginNav = document.getElementById('nav-login-link');
+    const logoutNav = document.getElementById('nav-logout-link');
 
     if (Clerk.user) {
       Clerk.mountUserButton(document.getElementById('user-button'));
+      
+      // Hide login, Show logout
       if(loginNav) loginNav.style.display = 'none'; 
+      if(logoutNav) {
+          logoutNav.style.display = 'block';
+          // Custom Logout Logic
+          logoutNav.addEventListener('click', async (e) => {
+              e.preventDefault();
+              logoutNav.innerText = "DISCONNECTING...";
+              await Clerk.signOut();
+              window.location.reload(); // Refresh the page to lock everything back down
+          });
+      }
       
       // Unlock Apply Button
       if(applyBtn) {
@@ -91,6 +104,9 @@
           window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
       };
     } else {
+      // Hide logout
+      if(logoutNav) logoutNav.style.display = 'none';
+
       // Lock Apply Button
       if(applyBtn) {
           applyBtn.href = "login.html";
@@ -129,7 +145,10 @@
                 <a href="#services" class="hover:text-blue-400 transition">SERVICES</a>
                 <a href="#roster" class="hover:text-blue-400 transition">ROSTER</a>
                 <a href="#apply" class="hover:text-blue-400 transition">JOIN TEAM</a>
+                
                 <a href="login.html" id="nav-login-link" class="text-slate-400 font-bold hover:text-white transition border border-white/20 px-3 py-1">Authorize</a>
+                <button id="nav-logout-link" style="display: none;" class="text-red-500 font-bold hover:text-red-400 transition border border-red-500/30 hover:border-red-500 px-3 py-1 uppercase tracking-widest bg-red-950/20">Disconnect</button>
+                
             </div>
             <a href="#services" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black px-6 py-3 rounded-full uppercase tracking-widest transition-all shadow-lg shadow-blue-600/30">Book Squad</a>
         </div>
