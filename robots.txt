@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://apexadmin-cmd.github.io/apexsquads/sitemap.xml
