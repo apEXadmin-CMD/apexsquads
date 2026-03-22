@@ -54,9 +54,7 @@
         #mobile-menu { transition: max-height 0.3s ease-in-out; max-height: 0; overflow: hidden; }
         #mobile-menu.active { max-height: 500px; border-bottom: 1px solid var(--apex-blue); }
 
-        /* SCROLL FIX FOR MODAL */
-        .modal-open { overflow: hidden; }
-        #payment-modal { -webkit-overflow-scrolling: touch; }
+        body.modal-open { overflow: hidden !important; }
     </style>
 </head>
 <body class="antialiased">
@@ -100,9 +98,22 @@
           currentPrice = price;
           document.getElementById('modal-pack-name').innerText = packName;
           document.getElementById('modal-price').innerText = `₹${price}`;
-          const upiLink = `upi://pay?pa=${MY_UPI_ID}&pn=Apex%20Squads&am=${price}&cu=INR&tn=Order_${packName.replace(/\s/g, '_')}`;
-          document.getElementById('pay-now-btn').href = upiLink;
           
+          // Device Check for UPI Redirection
+          const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          const upiRedirectContainer = document.getElementById('upi-redirect-container');
+          const pcScanMessage = document.getElementById('pc-scan-message');
+          
+          if (isMobile) {
+              const upiLink = `upi://pay?pa=${MY_UPI_ID}&pn=ApexSquads&am=${price}&cu=INR&tn=Order_${packName.replace(/\s/g, '_')}`;
+              document.getElementById('pay-now-btn').href = upiLink;
+              upiRedirectContainer.classList.remove('hidden');
+              pcScanMessage.classList.add('hidden');
+          } else {
+              upiRedirectContainer.classList.add('hidden');
+              pcScanMessage.classList.remove('hidden');
+          }
+
           document.getElementById('payment-modal').classList.remove('hidden');
           document.body.classList.add('modal-open');
       };
@@ -132,8 +143,7 @@
   }
 
   function toggleMobileMenu() {
-      const menu = document.getElementById('mobile-menu');
-      menu.classList.toggle('active');
+      document.getElementById('mobile-menu').classList.toggle('active');
   }
 </script>
 
@@ -142,7 +152,6 @@
 <header class="glass-nav sticky top-0 z-50">
     <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <h1 class="text-xl md:text-2xl font-black italic tracking-tighter text-blue-500 uppercase font-mono">APEX <span class="text-white">SQUADS</span></h1>
-        
         <div class="hidden md:flex items-center space-x-8 text-[10px] font-black tracking-[0.2em] text-slate-400">
             <a href="#services" class="hover:text-blue-400 transition">SERVICES</a>
             <a href="#roster" class="hover:text-blue-400 transition">ROSTER</a>
@@ -150,16 +159,14 @@
             <a href="login.html" class="nav-login-link border border-white/20 px-3 py-1">Authorize</a>
             <button class="nav-logout-link text-red-500 border border-red-500/30 px-3 py-1 uppercase" style="display: none;">Disconnect</button>
         </div>
-
         <button onclick="toggleMobileMenu()" class="md:hidden text-white p-2">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
     </nav>
-
     <div id="mobile-menu" class="md:hidden bg-[#0a0a0a] px-6 py-4 flex flex-col space-y-4 text-[11px] font-black tracking-widest text-slate-300">
-        <a href="#services" onclick="toggleMobileMenu()" class="border-b border-white/5 pb-2">SERVICES</a>
-        <a href="#roster" onclick="toggleMobileMenu()" class="border-b border-white/5 pb-2">ROSTER</a>
-        <a href="#apply" onclick="toggleMobileMenu()" class="border-b border-white/5 pb-2">JOIN TEAM</a>
+        <a href="#services" onclick="toggleMobileMenu()">SERVICES</a>
+        <a href="#roster" onclick="toggleMobileMenu()">ROSTER</a>
+        <a href="#apply" onclick="toggleMobileMenu()">JOIN TEAM</a>
         <a href="login.html" class="nav-login-link text-blue-400">AUTHORIZE</a>
         <button class="nav-logout-link text-red-500 text-left" style="display: none;">DISCONNECT</button>
     </div>
@@ -167,52 +174,21 @@
 
 <section class="max-w-4xl mx-auto pt-20 pb-20 px-6 text-center">
     <div class="inline-block px-3 py-1 border border-yellow-500/30 rounded-full text-yellow-500 text-[10px] font-bold mb-6 tracking-[0.2em] uppercase italic">India's Elite FF Agency</div>
-    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">Elite Rank Push. <br><span class="text-blue-600 italic">Guaranteed.</span></h1>
-    <p class="text-slate-400 text-md md:text-lg max-w-xl mx-auto">Welcome to <span class="text-white font-bold">Apex Squads FF India</span>. Secure a safe, professional paid FF Grandmaster push today.</p>
+    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight uppercase italic">Elite Rank Push. <br><span class="text-blue-600">Verified.</span></h1>
 </section>
 
 <section id="services" class="py-24 px-6 bg-[#050505]">
     <div class="max-w-7xl mx-auto">
-        <div class="border-l-8 border-blue-600 pl-6 mb-16">
-            <h2 class="text-4xl md:text-5xl font-black uppercase italic tracking-tighter text-white">Mission Packs</h2>
-        </div>
-
-        <div class="flex flex-wrap gap-2 mb-10 overflow-x-auto pb-2">
-            <button onclick="filterPacks('all')" class="px-6 py-3 bg-blue-600 text-white font-black text-[9px] uppercase tracking-widest whitespace-nowrap">All Ops</button>
-            <button onclick="filterPacks('rank')" class="px-6 py-3 bg-[#111] text-slate-500 font-black text-[9px] uppercase tracking-widest whitespace-nowrap border border-white/5">Rank Points</button>
-            <button onclick="filterPacks('duo')" class="px-6 py-3 bg-[#111] text-slate-500 font-black text-[9px] uppercase tracking-widest whitespace-nowrap border border-white/5">Duo/Trio</button>
-            <button onclick="filterPacks('squad')" class="px-6 py-3 bg-[#111] text-slate-500 font-black text-[9px] uppercase tracking-widest whitespace-nowrap border border-white/5">Full Squad</button>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pack-container">
-            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-                <div class="flex justify-between items-start mb-6"><span class="text-green-500 font-black text-[10px] tracking-widest uppercase">Starter</span></div>
-                <h3 class="text-2xl font-black text-white uppercase italic">+50 Rank Points</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-green-500 font-black text-[10px] tracking-widest uppercase">Starter</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">+50 Rank Points</h3>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹49</div><button onclick="openBooking('Starter Push 50RP', 49)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
             </div>
-
-            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-                <div class="flex justify-between items-start mb-6"><span class="text-blue-500 font-black text-[10px] tracking-widest uppercase">Standard</span></div>
-                <h3 class="text-2xl font-black text-white uppercase italic">+200 Rank Points</h3>
+            <div class="bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-blue-500 font-black text-[10px] tracking-widest uppercase">Standard</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">+200 Rank Points</h3>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹99</div><button onclick="openBooking('200 RP Push', 99)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
-            </div>
-
-            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-                <div class="flex justify-between items-start mb-6"><span class="text-red-600 font-black text-[10px] tracking-widest uppercase">Elite</span></div>
-                <h3 class="text-2xl font-black text-white uppercase italic">+1000 Rank Points</h3>
-                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹449</div><button onclick="openBooking('1000 RP Push', 449)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
-            </div>
-
-            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-                <div class="flex justify-between items-start mb-6"><span class="text-cyan-500 font-black text-[10px] tracking-widest uppercase">Duo Ops</span></div>
-                <h3 class="text-2xl font-black text-white uppercase italic">3 Duo Booyahs</h3>
-                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹129</div><button onclick="openBooking('3 Duo Booyahs', 129)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
-            </div>
-
-            <div class="pack-item squad bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-                <div class="flex justify-between items-start mb-6"><span class="text-red-500 font-black text-[10px] tracking-widest uppercase">Full Squad</span></div>
-                <h3 class="text-2xl font-black text-white uppercase italic">10 Squad Booyahs</h3>
-                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹699</div><button onclick="openBooking('10 Squad Booyahs', 699)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
             </div>
         </div>
     </div>
@@ -226,7 +202,7 @@
 </section>
 
 <footer class="py-10 bg-[#050505] text-center text-slate-600 text-[9px] tracking-[0.3em] px-6">
-    © 2026 APEX SQUADS | INDIA'S ELITE FREE FIRE RANK PUSH AGENCY
+    © 2026 APEX SQUADS | INDIA'S ELITE FF AGENCY
 </footer>
 
 <div id="payment-modal" class="fixed inset-0 z-[9999] hidden bg-black/95 backdrop-blur-xl overflow-y-auto">
@@ -234,25 +210,29 @@
         <div class="w-full max-w-sm bg-[#0a0a0a] border-2 border-blue-600 p-8 shadow-[0_0_80px_rgba(0,102,255,0.4)] relative text-center" style="clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);">
             
             <div class="mb-8 border-b border-white/10 pb-6">
-                <span class="text-[9px] font-black text-blue-500 uppercase tracking-[0.5em]">MISSION DEPLOYMENT</span>
+                <span class="text-[9px] font-black text-blue-500 uppercase tracking-[0.5em]">SECURE CHECKOUT</span>
                 <h2 class="text-2xl font-black text-white uppercase italic mt-3" id="modal-pack-name">Pack Name</h2>
                 <div class="text-5xl font-black text-green-500 italic mt-2" id="modal-price">₹0</div>
             </div>
 
-            <div class="mb-8">
-                <a id="pay-now-btn" href="#" class="btn-pay w-full py-5 text-sm shadow-[0_6px_0_#0044bb] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center">
-                    <span class="uppercase tracking-widest">Pay via UPI App</span>
+            <div id="upi-redirect-container" class="mb-8 hidden">
+                <a id="pay-now-btn" href="#" class="btn-pay w-full py-5 text-sm shadow-[0_6px_0_#0044bb] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center uppercase tracking-widest">
+                    Pay via UPI App
                 </a>
-                <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-4">Safe & Instant activation</p>
+                <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-4">Opens PhonePe, GPay, or Paytm</p>
+            </div>
+
+            <div id="pc-scan-message" class="mb-8 hidden">
+                <p class="text-[10px] text-blue-400 font-black uppercase tracking-widest leading-relaxed">Please scan the QR code below using your mobile phone to complete payment.</p>
             </div>
 
             <div class="space-y-4 pt-8 border-t border-white/5">
                 <div class="bg-white p-2 mx-auto w-40 h-40 rounded border-4 border-white/20">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=Apex%20Squads" alt="QR" class="w-full h-full">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=ApexSquads" alt="QR" class="w-full h-full">
                 </div>
                 <div class="bg-[#111] border border-white/10 p-3 flex justify-between items-center rounded-lg">
                     <span class="text-slate-300 font-mono text-[9px] truncate pr-2" id="upi-id-text">gamersindian21@okhdfcbank</span>
-                    <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase whitespace-nowrap">COPY</button>
+                    <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase">COPY</button>
                 </div>
             </div>
 
@@ -260,13 +240,10 @@
                 <button onclick="proceedToWhatsApp()" class="w-full py-5 bg-green-600/10 border-2 border-green-500 text-green-500 text-[11px] font-black uppercase tracking-[0.2em] hover:bg-green-600 hover:text-white transition-all">
                     Verify on WhatsApp
                 </button>
-                
-                <button onclick="closePaymentModal()" class="w-full py-4 border-2 border-red-500/40 text-red-500 text-[11px] font-black uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white transition-all bg-red-500/5">
+                <button onclick="closePaymentModal()" class="w-full py-4 bg-red-600 text-white border-2 border-red-800 text-[11px] font-black uppercase tracking-[0.2em] hover:bg-white hover:text-red-600 transition-all">
                     ← ABORT & GO BACK
                 </button>
             </div>
-
-            <p class="text-[8px] text-slate-600 mt-6 uppercase font-bold tracking-widest">Transaction handled via Secure UPI Protocol</p>
         </div>
     </div>
 </div>
@@ -287,7 +264,7 @@
                 <div class="pro-card p-1">
                     <div class="bg-black p-6 h-full text-center">
                         <div class="relative mb-6 border-b-4 border-blue-600">
-                            <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}" alt="${name}">
+                            <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}">
                             <div class="absolute bottom-0 right-0 bg-blue-600 px-4 py-1 text-[9px] font-black uppercase">${status.toUpperCase()}</div>
                         </div>
                         <h3 class="text-2xl font-black italic mb-1 uppercase">${name}</h3>
@@ -298,14 +275,6 @@
         });
     }
     loadRoster();
-
-    function filterPacks(category) {
-        const packs = document.querySelectorAll('.pack-item');
-        packs.forEach(pack => {
-            if (category === 'all' || pack.classList.contains(category)) pack.style.display = 'block';
-            else pack.style.display = 'none';
-        });
-    }
 </script>
 
 </body>
