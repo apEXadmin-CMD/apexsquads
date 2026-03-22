@@ -141,6 +141,17 @@
           else pack.style.display = 'none';
       });
   }
+    // 🚨 SMART APPLY TRIGGER
+  function handleApplyClick() {
+      if (window.Clerk && window.Clerk.user) {
+          // If logged in, open the Google Form in a new tab
+          window.open("https://forms.gle/Jo567Rx9q63oTytK7", "_blank");
+      } else {
+          // If NOT logged in, warn them and send to login
+          alert("⚠️ SYSTEM ALERT: You must AUTHORIZE (Login) before applying for the squad.");
+          window.location.href = "login.html"; 
+      }
+  }
 </script>
 
 <div class="crystal-bg"><div class="crystal-shape shape-1"></div><div class="crystal-shape shape-2"></div></div>
