@@ -77,44 +77,37 @@
     if (Clerk.user) {
       Clerk.mountUserButton(document.getElementById('user-button'));
       
-      // Hide login, Show logout
       if(loginNav) loginNav.style.display = 'none'; 
       if(logoutNav) {
           logoutNav.style.display = 'block';
-          // Custom Logout Logic
           logoutNav.addEventListener('click', async (e) => {
               e.preventDefault();
               logoutNav.innerText = "DISCONNECTING...";
               await Clerk.signOut();
-              window.location.reload(); // Refresh the page to lock everything back down
+              window.location.reload(); 
           });
       }
       
-      // Unlock Apply Button
       if(applyBtn) {
           applyBtn.href = "https://forms.gle/Jo567Rx9q63oTytK7";
           applyBtn.innerText = "Apply for Tryouts";
           applyBtn.classList.remove("grayscale", "bg-red-900", "text-red-500");
       }
 
-      // Unlock Pack Booking
       window.openBooking = function(packName, price) {
           const phone = "918709233294"; 
           const message = `🚀 SQUAD DEPLOYMENT REQUEST %0A%0AOperator: ${Clerk.user.firstName} %0APack: ${packName} %0APrice: ₹${price} %0A%0AReady for mission.`;
           window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
       };
     } else {
-      // Hide logout
       if(logoutNav) logoutNav.style.display = 'none';
 
-      // Lock Apply Button
       if(applyBtn) {
           applyBtn.href = "login.html";
           applyBtn.innerText = "LOGIN REQUIRED TO APPLY";
           applyBtn.classList.add("grayscale", "bg-red-900", "text-red-500", "border-red-500");
       }
       
-      // Lock Pack Booking
       window.openBooking = function(packName, price) { window.location.href = "login.html"; };
     }
   });
@@ -124,14 +117,6 @@
     <div class="crystal-shape shape-1"></div>
     <div class="crystal-shape shape-2"></div>
     <div class="crystal-shape shape-3"></div>
-</div>
-
-<div class="bg-black py-4 border-b border-white/5 flex flex-col items-center">
-    <span class="text-[8px] text-slate-700 font-black uppercase tracking-[0.3em] mb-2">Sponsored Feed</span>
-    <div class="max-w-7xl mx-auto w-full flex justify-center">
-        <script async="async" data-cfasync="false" src="https://pl28945398.profitablecpmratenetwork.com/44cf47d93dd8a3a9e427a6959643f1fd/invoke.js"></script>
-        <div id="container-44cf47d93dd8a3a9e427a6959643f1fd"></div>
-    </div>
 </div>
 
 <header class="glass-nav sticky top-0 z-50">
@@ -148,7 +133,6 @@
                 
                 <a href="login.html" id="nav-login-link" class="text-slate-400 font-bold hover:text-white transition border border-white/20 px-3 py-1">Authorize</a>
                 <button id="nav-logout-link" style="display: none;" class="text-red-500 font-bold hover:text-red-400 transition border border-red-500/30 hover:border-red-500 px-3 py-1 uppercase tracking-widest bg-red-950/20">Disconnect</button>
-                
             </div>
             <a href="#services" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-black px-6 py-3 rounded-full uppercase tracking-widest transition-all shadow-lg shadow-blue-600/30">Book Squad</a>
         </div>
@@ -209,12 +193,6 @@
                 <h3 class="text-2xl font-black text-white uppercase italic">+1000 Rank Points</h3>
                 <p class="text-slate-500 text-[10px] font-bold mt-2 uppercase italic tracking-widest">Guaranteed Heroic Entry</p>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹449</div><button onclick="openBooking('1000 RP Push', 449)" class="bg-blue-600 px-6 py-3 text-[10px] font-black uppercase tracking-widest hover:bg-white hover:text-blue-600 transition-all">Select</button></div>
-            </div>
-
-            <div class="col-span-full my-10 py-8 border-y border-dashed border-blue-900/20 flex flex-col items-center">
-                <p class="text-[9px] text-blue-900 font-black uppercase mb-4 tracking-widest">Commercial Break: Squad Support</p>
-                <script async="async" data-cfasync="false" src="https://pl28945398.profitablecpmratenetwork.com/44cf47d93dd8a3a9e427a6959643f1fd/invoke.js"></script>
-                <div id="container-44cf47d93dd8a3a9e427a6959643f1fd"></div>
             </div>
 
             <div class="pack-item matches duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
@@ -317,7 +295,7 @@
             <div class="h-[1px] w-12 bg-blue-900"></div>
         </div>
         <h3 class="text-2xl font-black text-white uppercase italic mb-8 tracking-tighter">Verify <span class="text-blue-600">Server Uplink</span> Status</h3>
-        <a href="https://www.profitablecpmratenetwork.com/bdvp9019?key=8e03b6e8e8c02af4ea896cc7143e7329" target="_blank" rel="noopener noreferrer" class="smartlink-btn inline-block px-16 py-5 bg-blue-600 text-white font-black uppercase text-[12px] tracking-[0.3em] hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-[0_10px_0_#0033aa] active:translate-y-[5px] active:shadow-none">Initiate System Check</a>
+        <a href="#" class="smartlink-btn inline-block px-16 py-5 bg-blue-600 text-white font-black uppercase text-[12px] tracking-[0.3em] hover:bg-white hover:text-blue-600 transition-all duration-300 shadow-[0_10px_0_#0033aa] active:translate-y-[5px] active:shadow-none">Initiate System Check</a>
         <p class="mt-10 text-[8px] text-slate-600 font-bold uppercase tracking-[0.2em] max-w-sm mx-auto leading-relaxed">Note: This check ensures stable connection for <span class="text-blue-500">Apex Squads</span> mission deployments.</p>
     </div>
 </section>
@@ -330,11 +308,7 @@
     </div>
 </section>
 
-<div class="py-12 bg-[#050505] flex justify-center">
-    <script async="async" data-cfasync="false" src="https://pl28945398.profitablecpmratenetwork.com/44cf47d93dd8a3a9e427a6959643f1fd/invoke.js"></script>
-    <div id="container-44cf47d93dd8a3a9e427a6959643f1fd"></div>
-</div>
-<footer class="py-10 text-center text-slate-600 text-[10px] tracking-[0.3em]">
+<footer class="py-10 bg-[#050505] text-center text-slate-600 text-[10px] tracking-[0.3em]">
     © 2026 APEX SQUADS | BUILT FOR THE HIGHEST RANK
 </footer>
 
@@ -346,9 +320,9 @@
             <span class="text-[9px] font-black text-blue-500 uppercase tracking-[0.3em]">SECURE INTEL FEED</span>
         </div>
         <div class="min-h-[100px] flex items-center justify-center bg-white/5 border border-white/5 p-2">
-            <script src="https://pl28945606.profitablecpmratenetwork.com/93/82/01/9382014b855ad7b483ae3b607963f565.js"></script>
+            <p class="text-xs text-blue-500 font-mono animate-pulse">ENCRYPTED CONNECTION ESTABLISHED</p>
         </div>
-        <p class="text-[8px] text-slate-700 mt-3 uppercase font-bold tracking-widest text-center">System Message: External Source</p>
+        <p class="text-[8px] text-slate-700 mt-3 uppercase font-bold tracking-widest text-center">System Message: Secure Source</p>
         <div class="absolute bottom-0 right-0 w-4 h-4 bg-blue-600" style="clip-path: polygon(100% 0, 100% 100%, 0 100%);"></div>
     </div>
 </div>
