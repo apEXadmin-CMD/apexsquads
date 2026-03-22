@@ -53,9 +53,13 @@
         
         #mobile-menu { transition: max-height 0.3s ease-in-out; max-height: 0; overflow: hidden; }
         #mobile-menu.active { max-height: 500px; border-bottom: 1px solid var(--apex-blue); }
+
+        /* SCROLL FIX FOR MODAL */
+        .modal-open { overflow: hidden; }
+        #payment-modal { -webkit-overflow-scrolling: touch; }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
 <div id="user-button" class="fixed top-6 right-6 z-[200]"></div>
 
@@ -98,8 +102,9 @@
           document.getElementById('modal-price').innerText = `₹${price}`;
           const upiLink = `upi://pay?pa=${MY_UPI_ID}&pn=Apex%20Squads&am=${price}&cu=INR&tn=Order_${packName.replace(/\s/g, '_')}`;
           document.getElementById('pay-now-btn').href = upiLink;
+          
           document.getElementById('payment-modal').classList.remove('hidden');
-          document.getElementById('payment-modal').classList.add('flex');
+          document.body.classList.add('modal-open');
       };
     } else {
       logoutNav.forEach(el => el.style.display = 'none');
@@ -112,7 +117,11 @@
     }
   });
 
-  function closePaymentModal() { document.getElementById('payment-modal').classList.add('hidden'); }
+  function closePaymentModal() { 
+      document.getElementById('payment-modal').classList.add('hidden'); 
+      document.body.classList.remove('modal-open');
+  }
+  
   function copyUPI() { navigator.clipboard.writeText(MY_UPI_ID); alert("UPI ID Copied!"); }
 
   function proceedToWhatsApp() {
@@ -158,7 +167,7 @@
 
 <section class="max-w-4xl mx-auto pt-20 pb-20 px-6 text-center">
     <div class="inline-block px-3 py-1 border border-yellow-500/30 rounded-full text-yellow-500 text-[10px] font-bold mb-6 tracking-[0.2em] uppercase italic">India's Elite FF Agency</div>
-    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6">Reach the Peak.</h1>
+    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">Elite Rank Push. <br><span class="text-blue-600 italic">Guaranteed.</span></h1>
     <p class="text-slate-400 text-md md:text-lg max-w-xl mx-auto">Welcome to <span class="text-white font-bold">Apex Squads FF India</span>. Secure a safe, professional paid FF Grandmaster push today.</p>
 </section>
 
@@ -209,15 +218,6 @@
     </div>
 </section>
 
-<section class="max-w-6xl mx-auto py-20 px-6">
-    <h2 class="text-2xl md:text-3xl font-black text-white italic uppercase mb-10">Wall of Fame</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <img src="img/booyah1.jpeg" class="rounded-xl border border-white/10" alt="Proof">
-        <img src="img/booyah2.jpeg" class="rounded-xl border border-white/10" alt="Proof">
-        <div class="aspect-video bg-white/5 rounded-xl flex items-center justify-center text-slate-600 text-[10px] p-4 italic text-center uppercase tracking-widest">Next Entry Scanning...</div>
-    </div>
-</section>
-
 <section id="roster" class="max-w-7xl mx-auto py-20 px-6">
     <div class="border-l-8 border-blue-600 pl-6 mb-12">
         <h2 class="text-4xl md:text-5xl font-black uppercase italic tracking-tighter">Combat Roster</h2>
@@ -229,37 +229,44 @@
     © 2026 APEX SQUADS | INDIA'S ELITE FREE FIRE RANK PUSH AGENCY
 </footer>
 
-<div id="payment-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/95 backdrop-blur-md px-4">
-    <div class="bg-[#0a0a0a] border-2 border-blue-600 p-8 w-full max-w-sm shadow-[0_0_60px_rgba(0,102,255,0.3)] relative text-center" style="clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);">
-        
-        <div class="mb-8 border-b border-white/10 pb-6">
-            <span class="text-[9px] font-black text-blue-500 uppercase tracking-[0.4em]">SECURE CHECKOUT</span>
-            <h2 class="text-2xl font-black text-white uppercase italic mt-3" id="modal-pack-name">Pack Name</h2>
-            <div class="text-5xl font-black text-green-500 italic mt-2" id="modal-price">₹0</div>
-        </div>
-
-        <div class="mb-8">
-            <a id="pay-now-btn" href="#" class="btn-pay w-full py-5 text-sm shadow-[0_6px_0_#0044bb] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center">
-                <span class="uppercase tracking-widest">Pay via UPI App</span>
-            </a>
-            <p class="text-[8px] text-slate-500 uppercase font-black tracking-widest mt-3">Supports GPay, PhonePe, Paytm</p>
-        </div>
-
-        <div class="space-y-4 pt-6 border-t border-white/5">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=Apex%20Squads" alt="QR" class="w-32 h-32 mx-auto bg-white p-2 rounded border-4 border-white/20">
-            <div class="bg-[#111] border border-white/10 p-3 flex justify-between items-center rounded">
-                <span class="text-slate-300 font-mono text-[9px]" id="upi-id-text">gamersindian21@okhdfcbank</span>
-                <button onclick="copyUPI()" class="text-blue-500 text-[9px] font-black">COPY</button>
+<div id="payment-modal" class="fixed inset-0 z-[9999] hidden bg-black/95 backdrop-blur-xl overflow-y-auto">
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="w-full max-w-sm bg-[#0a0a0a] border-2 border-blue-600 p-8 shadow-[0_0_80px_rgba(0,102,255,0.4)] relative text-center" style="clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);">
+            
+            <div class="mb-8 border-b border-white/10 pb-6">
+                <span class="text-[9px] font-black text-blue-500 uppercase tracking-[0.5em]">MISSION DEPLOYMENT</span>
+                <h2 class="text-2xl font-black text-white uppercase italic mt-3" id="modal-pack-name">Pack Name</h2>
+                <div class="text-5xl font-black text-green-500 italic mt-2" id="modal-price">₹0</div>
             </div>
-        </div>
 
-        <div class="flex flex-col gap-3 mt-8">
-            <button onclick="proceedToWhatsApp()" class="w-full py-4 border border-green-500/30 text-green-500 text-[10px] font-black uppercase tracking-widest hover:bg-green-500/10 transition-all">
-                Confirm Payment on WhatsApp
-            </button>
-            <button onclick="closePaymentModal()" class="w-full py-3 text-slate-500 text-[10px] font-black uppercase tracking-widest hover:text-white transition-all">
-                ← Go Back to Mission Selection
-            </button>
+            <div class="mb-8">
+                <a id="pay-now-btn" href="#" class="btn-pay w-full py-5 text-sm shadow-[0_6px_0_#0044bb] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center">
+                    <span class="uppercase tracking-widest">Pay via UPI App</span>
+                </a>
+                <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-4">Safe & Instant activation</p>
+            </div>
+
+            <div class="space-y-4 pt-8 border-t border-white/5">
+                <div class="bg-white p-2 mx-auto w-40 h-40 rounded border-4 border-white/20">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=Apex%20Squads" alt="QR" class="w-full h-full">
+                </div>
+                <div class="bg-[#111] border border-white/10 p-3 flex justify-between items-center rounded-lg">
+                    <span class="text-slate-300 font-mono text-[9px] truncate pr-2" id="upi-id-text">gamersindian21@okhdfcbank</span>
+                    <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase whitespace-nowrap">COPY</button>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-4 mt-10">
+                <button onclick="proceedToWhatsApp()" class="w-full py-5 bg-green-600/10 border-2 border-green-500 text-green-500 text-[11px] font-black uppercase tracking-[0.2em] hover:bg-green-600 hover:text-white transition-all">
+                    Verify on WhatsApp
+                </button>
+                
+                <button onclick="closePaymentModal()" class="w-full py-4 border-2 border-red-500/40 text-red-500 text-[11px] font-black uppercase tracking-[0.2em] hover:bg-red-500 hover:text-white transition-all bg-red-500/5">
+                    ← ABORT & GO BACK
+                </button>
+            </div>
+
+            <p class="text-[8px] text-slate-600 mt-6 uppercase font-bold tracking-widest">Transaction handled via Secure UPI Protocol</p>
         </div>
     </div>
 </div>
@@ -280,7 +287,7 @@
                 <div class="pro-card p-1">
                     <div class="bg-black p-6 h-full text-center">
                         <div class="relative mb-6 border-b-4 border-blue-600">
-                            <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}">
+                            <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}" alt="${name}">
                             <div class="absolute bottom-0 right-0 bg-blue-600 px-4 py-1 text-[9px] font-black uppercase">${status.toUpperCase()}</div>
                         </div>
                         <h3 class="text-2xl font-black italic mb-1 uppercase">${name}</h3>
