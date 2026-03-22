@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Apex Squads FF India | Safe Free Fire Rank Push Agency</title>
-    <meta name="description" content="India's top paid Free Fire rank push agency. Hire Tier-1 pros for safe Grandmaster push. 100% Legit.">
-    <meta name="keywords" content="Apex Squads FF India, Free Fire rank push agency, Paid FF Grandmaster push, Safe Free Fire rank push">
+    <meta name="description" content="India's premier safe Free Fire rank push agency. Hire Tier-1 pros for Grandmaster missions. Starter packs from ₹29. 100% Legit Operations.">
+    <meta name="keywords" content="Apex Squads FF India, Free Fire rank push, FF Grandmaster push, Paid rank push India, Safe FF rank push">
     <meta name="author" content="Apex Squads HQ">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +28,7 @@
             --bg-dark: #020617;
         }
 
-        body { background-color: var(--bg-dark); color: white; font-family: 'Inter', sans-serif; margin: 0; }
+        body { background-color: var(--bg-dark); color: white; font-family: 'Inter', sans-serif; margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
         .crystal-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: var(--bg-dark); }
         .crystal-shape { position: absolute; filter: blur(120px); border-radius: 50%; opacity: 0.3; animation: float 20s infinite alternate; }
         .shape-1 { width: 400px; height: 400px; background: #1e3a8a; top: -10%; left: -10%; }
@@ -37,13 +37,16 @@
 
         .glass-nav { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .pro-card { background: var(--apex-gray); border: 2px solid var(--apex-border); clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%); transition: 0.3s; }
-        .pro-card:hover { border-color: var(--apex-blue); transform: translateY(-5px); }
-        .btn-apex { background: var(--apex-blue); color: white; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); transition: 0.3s; }
-        .btn-pay { background: linear-gradient(90deg, #0066ff, #00c2ff); color: white; font-weight: 900; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); transition: 0.2s; }
+        .pro-card:hover { border-color: var(--apex-blue); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2); }
         
-        #mobile-menu { transition: all 0.3s ease; max-height: 0; overflow: hidden; }
-        #mobile-menu.active { max-height: 500px; padding: 1rem 0; border-bottom: 2px solid var(--apex-blue); }
+        .btn-apex { background: var(--apex-blue); color: white; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%); transition: 0.3s; cursor: pointer; }
+        .btn-pay { background: linear-gradient(90deg, #0066ff, #00c2ff); color: white; font-weight: 900; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); display: flex; align-items: center; justify-content: center; }
+        
+        #mobile-menu { transition: max-height 0.4s ease-in-out; max-height: 0; overflow: hidden; }
+        #mobile-menu.active { max-height: 800px; border-bottom: 2px solid var(--apex-blue); }
+        
         body.modal-open { overflow: hidden !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="antialiased">
@@ -67,6 +70,7 @@
     await Clerk.load();
     const loginNav = document.querySelectorAll('.nav-login-link');
     const logoutNav = document.querySelectorAll('.nav-logout-link');
+    const applyBtn = document.getElementById('apply-btn');
 
     if (Clerk.user) {
       Clerk.mountUserButton(document.getElementById('user-button'));
@@ -75,32 +79,57 @@
           el.style.display = 'block';
           el.onclick = async () => { await Clerk.signOut(); window.location.reload(); };
       });
+      
+      if(applyBtn) {
+          applyBtn.href = "https://forms.gle/Jo567Rx9q63oTytK7";
+          applyBtn.innerText = "Apply for Tryouts";
+          applyBtn.classList.remove("grayscale", "opacity-50");
+      }
 
       window.openBooking = function(packName, price) {
           currentPack = packName; currentPrice = price;
           document.getElementById('modal-pack-name').innerText = packName;
           document.getElementById('modal-price').innerText = `₹${price}`;
           
-          // 🚀 HYBRID REDIRECTION LOGIC
-          const upiUrl = `upi://pay?pa=${MY_UPI_ID}&pn=ApexSquads&am=${price}&cu=INR`;
-          document.getElementById('pay-now-btn').href = upiUrl;
+          // 🚀 DIRECT ACTION LINK PROTOCOL 
+          const upiUrl = `upi://pay?pa=${MY_UPI_ID}&pn=Apex%20Squads&am=${price}&cu=INR&tn=Apex_${packName.replace(/\s/g, '_')}`;
+          document.getElementById('pay-now-btn').setAttribute('href', upiUrl);
 
           document.getElementById('payment-modal').classList.remove('hidden');
           document.body.classList.add('modal-open');
       };
     } else {
       logoutNav.forEach(el => el.style.display = 'none');
+      if(applyBtn) {
+          applyBtn.href = "login.html";
+          applyBtn.innerText = "LOGIN TO APPLY";
+          applyBtn.classList.add("grayscale", "opacity-50");
+      }
       window.openBooking = function() { window.location.href = "login.html"; };
     }
   });
 
-  function closePaymentModal() { document.getElementById('payment-modal').classList.add('hidden'); document.body.classList.remove('modal-open'); }
-  function copyUPI() { navigator.clipboard.writeText(MY_UPI_ID); alert("UPI ID Copied!"); }
+  function closePaymentModal() { 
+      document.getElementById('payment-modal').classList.add('hidden'); 
+      document.body.classList.remove('modal-open'); 
+  }
+  
+  function copyUPI() { 
+      navigator.clipboard.writeText(MY_UPI_ID); 
+      const copyBtn = document.getElementById('copy-btn');
+      copyBtn.innerText = "COPIED!";
+      copyBtn.classList.add("text-green-500");
+      setTimeout(() => { 
+          copyBtn.innerText = "COPY"; 
+          copyBtn.classList.remove("text-green-500");
+      }, 2000);
+  }
+  
   function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('active'); }
 
   function proceedToWhatsApp() {
       const phone = "918709233294"; 
-      const message = `🚀 PAYMENT SENT %0A%0AOperator: ${Clerk.user.firstName} %0APack: ${currentPack} %0APrice: ₹${currentPrice} %0A%0A*Sending screenshot for verification...*`;
+      const message = `🚀 PAYMENT CONFIRMED %0A%0AOperator: ${Clerk.user ? Clerk.user.firstName : 'Client'} %0APack: ${currentPack} %0APrice: ₹${currentPrice} %0A%0A*Sending screenshot for verification...*`;
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
       closePaymentModal();
   }
@@ -118,26 +147,26 @@
 
 <header class="glass-nav sticky top-0 z-50">
     <nav class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
-        <h1 class="text-xl md:text-2xl font-black italic text-blue-500 uppercase font-mono tracking-tighter">APEX <span class="text-white">SQUADS</span></h1>
+        <h1 class="text-xl font-black italic text-blue-500 uppercase font-mono tracking-tighter">APEX <span class="text-white">SQUADS</span></h1>
         
         <div class="hidden md:flex items-center space-x-8 text-[10px] font-black tracking-[0.2em] text-slate-400">
             <a href="#services" class="hover:text-white transition">SERVICES</a>
             <a href="#proof" class="hover:text-white transition">WALL OF FAME</a>
+            <a href="#apply" class="hover:text-white transition">JOIN TEAM</a>
             <a href="#roster" class="hover:text-white transition">ROSTER</a>
-            <a href="#faq" class="hover:text-white transition">FAQ</a>
-            <a href="login.html" class="nav-login-link border border-white/20 px-4 py-2 hover:bg-white hover:text-black transition">AUTHORIZE</a>
-            <button class="nav-logout-link text-red-500 border border-red-500/30 px-4 py-2 uppercase transition" style="display: none;">DISCONNECT</button>
+            <a href="login.html" class="nav-login-link border border-white/20 px-4 py-2 hover:bg-white hover:text-black">AUTHORIZE</a>
+            <button class="nav-logout-link text-red-500 border border-red-500/30 px-4 py-2 uppercase" style="display: none;">Disconnect</button>
         </div>
 
         <button onclick="toggleMobileMenu()" class="md:hidden text-white"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
     </nav>
-    
-    <div id="mobile-menu" class="md:hidden bg-[#0a0a0a] px-6 flex flex-col space-y-4 text-[11px] font-black tracking-widest text-slate-300">
-        <a href="#services" onclick="toggleMobileMenu()">SERVICES</a>
+    <div id="mobile-menu" class="md:hidden bg-[#0a0a0a] px-6 py-6 flex flex-col space-y-6 text-[12px] font-black tracking-widest text-slate-300">
+        <a href="#services" onclick="toggleMobileMenu()">MISSION PACKS</a>
         <a href="#proof" onclick="toggleMobileMenu()">WALL OF FAME</a>
-        <a href="#roster" onclick="toggleMobileMenu()">ROSTER</a>
+        <a href="#apply" onclick="toggleMobileMenu()">JOIN TEAM</a>
+        <a href="#roster" onclick="toggleMobileMenu()">COMBAT ROSTER</a>
         <a href="#faq" onclick="toggleMobileMenu()">FAQ</a>
-        <a href="login.html" class="nav-login-link text-blue-400">AUTHORIZE</a>
+        <a href="login.html" class="nav-login-link text-blue-400">AUTHORIZE SYSTEM</a>
         <button class="nav-logout-link text-red-500 text-left" style="display: none;">DISCONNECT</button>
     </div>
 </header>
@@ -153,7 +182,7 @@
         <h2 class="text-3xl md:text-5xl font-black uppercase italic text-white mb-10 border-l-8 border-blue-600 pl-6">Mission Packs</h2>
         
         <div class="flex gap-2 mb-10 overflow-x-auto pb-2 no-scrollbar">
-            <button onclick="filterPacks('all')" class="px-6 py-3 bg-blue-600 text-white font-black text-[10px] uppercase whitespace-nowrap">All</button>
+            <button onclick="filterPacks('all')" class="px-6 py-3 bg-blue-600 text-white font-black text-[10px] uppercase whitespace-nowrap">All Ops</button>
             <button onclick="filterPacks('rank')" class="px-6 py-3 bg-[#111] text-slate-400 font-black text-[10px] uppercase border border-white/5 whitespace-nowrap">Rank Points</button>
             <button onclick="filterPacks('duo')" class="px-6 py-3 bg-[#111] text-slate-400 font-black text-[10px] uppercase border border-white/5 whitespace-nowrap">Duo/Trio</button>
             <button onclick="filterPacks('squad')" class="px-6 py-3 bg-[#111] text-slate-400 font-black text-[10px] uppercase border border-white/5 whitespace-nowrap">Full Squad</button>
@@ -162,8 +191,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pack-container">
             <div class="pack-item rank bg-[#111] border-2 border-green-600/20 p-8 group hover:border-blue-600 transition-all">
                 <span class="text-green-500 font-black text-[10px] uppercase">Quick Trial</span>
-                <h3 class="text-2xl font-black text-white uppercase italic mt-4">+100 Rank Points</h3>
-                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹29</div><button onclick="openBooking('Quick Trial 100RP', 29)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">+10 Rank Points</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹29</div><button onclick="openBooking('Quick Trial 10RP', 29)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
             </div>
             <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
                 <span class="text-blue-500 font-black text-[10px] uppercase">Starter</span>
@@ -176,30 +205,44 @@
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹99</div><button onclick="openBooking('200 RP Push', 99)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
             </div>
             <div class="pack-item rank bg-[#111] border-2 border-blue-600/30 p-8 group hover:border-blue-600 transition-all">
-                <span class="text-red-500 font-black text-[10px] uppercase">Elite</span>
+                <span class="text-blue-500 font-black text-[10px] uppercase">Pro Match</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">+500 Rank Points</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹249</div><button onclick="openBooking('500 RP Push', 249)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
+            </div>
+            <div class="pack-item rank bg-[#111] border-2 border-red-600/40 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-red-500 font-black text-[10px] uppercase">Elite Squad</span>
                 <h3 class="text-2xl font-black text-white uppercase italic mt-4">+1000 Rank Points</h3>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹449</div><button onclick="openBooking('1000 RP Push', 449)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
             </div>
-            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-                <span class="text-cyan-500 font-black text-[10px] uppercase">Trial Duo</span>
+            <div class="pack-item duo bg-[#111] border-2 border-green-600/20 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-green-500 font-black text-[10px] uppercase">Trial Duo</span>
                 <h3 class="text-2xl font-black text-white uppercase italic mt-4">1 Duo Booyah</h3>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹49</div><button onclick="openBooking('1 Duo Booyah Trial', 49)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
             </div>
-            <div class="pack-item rank bg-[#111] border-2 border-green-600/20 p-8 group hover:border-blue-600 transition-all">
-    <span class="text-green-500 font-black text-[10px] uppercase">Quick Trial</span>
-    <h3 class="text-2xl font-black text-white uppercase italic mt-4">+100 Rank Points</h3>
-    <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹29</div><button onclick="openBooking('Quick Trial 10RP', 29)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
-</div>
-
-<div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-    <span class="text-indigo-500 font-black text-[10px] uppercase">Trio Squad</span>
-    <h3 class="text-2xl font-black text-white uppercase italic mt-4">5 Trio Booyahs</h3>
-    <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹299</div><button onclick="openBooking('5 Trio Booyahs', 299)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
-</div>
+            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-cyan-500 font-black text-[10px] uppercase">Standard Duo</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">3 Duo Booyahs</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹129</div><button onclick="openBooking('3 Duo Booyahs', 129)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
+            </div>
+            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-indigo-500 font-black text-[10px] uppercase">Trio Squad</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">5 Trio Booyahs</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹299</div><button onclick="openBooking('5 Trio Booyahs', 299)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
+            </div>
+            <div class="pack-item duo bg-[#111] border-2 border-cyan-600/30 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-cyan-500 font-black text-[10px] uppercase">Mega Duo</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">10 Duo Booyahs</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹399</div><button onclick="openBooking('10 Duo Booyahs', 399)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
+            </div>
             <div class="pack-item squad bg-[#111] border-2 border-red-600/40 p-8 group hover:border-blue-600 transition-all">
                 <span class="text-red-500 font-black text-[10px] uppercase">Full Squad</span>
                 <h3 class="text-2xl font-black text-white uppercase italic mt-4">10 Squad Booyahs</h3>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹699</div><button onclick="openBooking('10 Squad Booyahs', 699)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
+            </div>
+            <div class="pack-item squad bg-[#111] border-2 border-yellow-600/40 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-yellow-500 font-black text-[10px] uppercase">Tournament Grade</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">1 Day Unlimited</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹1299</div><button onclick="openBooking('Tournament Grade Day', 1299)" class="btn-apex px-8 py-3 text-[11px]">Select</button></div>
             </div>
         </div>
     </div>
@@ -207,26 +250,26 @@
 
 <section id="proof" class="py-20 px-6">
     <div class="max-w-7xl mx-auto text-center md:text-left">
-        <h2 class="text-3xl md:text-5xl font-black uppercase italic text-white mb-12">Wall of Fame</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <img src="img/booyah1.jpeg" class="rounded border border-white/10 aspect-video object-cover hover:border-blue-500 transition cursor-pointer" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
-            <img src="img/booyah2.jpeg" class="rounded border border-white/10 aspect-video object-cover hover:border-blue-500 transition cursor-pointer" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
-            <img src="img/booyah3.jpeg" class="rounded border border-white/10 aspect-video object-cover hover:border-blue-500 transition cursor-pointer" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
-            <div class="bg-white/5 rounded border-2 border-dashed border-white/10 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 p-4">Win Scanning...</div>
-        </div>
-    </div>
-</section>
-<section id="proof" class="py-20 px-6">
-    <div class="max-w-7xl mx-auto">
         <h2 class="text-3xl md:text-5xl font-black uppercase italic text-white mb-12 border-l-8 border-blue-600 pl-6">Wall of Fame</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <img src="img/booyah1.jpeg" class="rounded border border-white/10 aspect-video object-cover hover:border-blue-500 transition cursor-pointer" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
-            <img src="img/booyah2.jpeg" class="rounded border border-white/10 aspect-video object-cover hover:border-blue-500 transition cursor-pointer" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
-            <img src="img/booyah3.jpeg" class="rounded border border-white/10 aspect-video object-cover hover:border-blue-500 transition cursor-pointer" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
+            <img src="img/booyah1.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'">
+            <img src="img/booyah2.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'">
+            <img src="img/booyah3.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'">
             <div class="bg-white/5 rounded border-2 border-dashed border-white/10 flex items-center justify-center text-[10px] font-black uppercase tracking-[0.3em] text-slate-500 p-4">Win Scanning...</div>
         </div>
     </div>
 </section>
+
+<section id="apply" class="py-24 px-6 bg-black border-t border-white/5">
+    <div class="max-w-4xl mx-auto border-4 border-blue-600 p-10 md:p-16 text-center bg-[#0a0a0a] shadow-[0_0_50px_rgba(0,102,255,0.2)]" style="clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);">
+        <h2 class="text-4xl md:text-6xl font-black italic text-white uppercase mb-6 tracking-tighter leading-none">Are you an <span class="text-blue-600">Apex Pro?</span></h2>
+        <p class="text-slate-500 mb-10 uppercase font-bold tracking-[0.3em] text-[10px]">Scouting Tier-1 Rushers and Snipers</p>
+        <a href="#" id="apply-btn" target="_blank" class="btn-apex px-12 py-5 text-lg inline-block shadow-[0_8px_0_#0044bb] active:translate-y-2 transition-all">
+            Apply for Tryouts
+        </a>
+    </div>
+</section>
+
 <section id="roster" class="py-20 px-6 bg-[#020617]">
     <div class="max-w-7xl mx-auto">
         <h2 class="text-3xl md:text-5xl font-black uppercase italic text-white mb-12 border-l-8 border-blue-600 pl-6">Combat Roster</h2>
@@ -236,35 +279,37 @@
 
 <section id="faq" class="py-20 px-6 bg-[#050505] border-t border-white/5">
     <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-black text-white uppercase italic mb-12 tracking-widest">Intel Briefing (FAQ)</h2>
+        <h2 class="text-3xl font-black text-white uppercase italic mb-12 tracking-widest leading-none">Intel Briefing (FAQ)</h2>
         <div class="space-y-6 text-left">
-            <div class="bg-[#111] p-8 border border-white/5 rounded-lg transition hover:border-blue-600">
+            <div class="bg-[#111] p-8 border border-white/5 rounded-lg">
                 <h4 class="text-blue-500 font-bold uppercase text-xs mb-4">Is it safe for my account?</h4>
-                <p class="text-slate-400 text-sm leading-relaxed">Yes. We use 100% manual pro-play only. No third-party scripts, hacks, or bypasses. Your account is 100% safe with our Tier-1 squad.</p>
+                <p class="text-slate-400 text-sm leading-relaxed italic">Yes. We use 100% manual pro-play only. No third-party scripts, hacks, or bypasses. Your account is 100% safe.</p>
             </div>
-            <div class="bg-[#111] p-8 border border-white/5 rounded-lg transition hover:border-blue-600">
-                <h4 class="text-blue-500 font-bold uppercase text-xs mb-4">How do I deploy?</h4>
-                <p class="text-slate-400 text-sm leading-relaxed">Select a mission, complete the UPI payment via our secure redirect, and send the screenshot to our operator via WhatsApp. Deployment happens within 30 minutes.</p>
+            <div class="bg-[#111] p-8 border border-white/5 rounded-lg">
+                <h4 class="text-blue-500 font-bold uppercase text-xs mb-4">Deployment Time?</h4>
+                <p class="text-slate-400 text-sm leading-relaxed italic">Deployment typically occurs within 15-30 minutes of payment verification on WhatsApp.</p>
             </div>
         </div>
     </div>
 </section>
+
 <section class="max-w-6xl mx-auto py-20 px-6 border-t border-white/5">
-    <h2 class="text-2xl font-black text-white mb-8 italic text-center uppercase tracking-widest">Live Operations Feed</h2>
+    <h2 class="text-center text-xs font-black uppercase text-slate-600 tracking-[0.5em] mb-10 italic">Live Operations Feed</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div class="aspect-video bg-white/5 rounded-2xl overflow-hidden border border-white/10"><img src="img/proof1.jpeg" onerror="this.src='https://placehold.co/400x225/111/white?text=LIVE+FEED'" class="w-full h-full object-cover"></div>
-        <div class="aspect-video bg-white/5 rounded-2xl overflow-hidden border border-white/10"><img src="img/proof2.jpeg" onerror="this.src='https://placehold.co/400x225/111/white?text=LIVE+FEED'" class="w-full h-full object-cover"></div>
+        <img src="img/proof1.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=LIVE+FEED'">
+        <img src="img/proof2.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=LIVE+FEED'">
     </div>
 </section>
+
 <footer class="py-12 bg-[#050505] text-center text-slate-600 text-[10px] tracking-[0.4em] px-6 uppercase">
-    © 2026 APEX SQUADS | ELITE FF AGENCY | MASTER BUILD v7.0
+    © 2026 APEX SQUADS | INDIA'S ELITE FF AGENCY | PRODUCTION v10.0
 </footer>
 
 <div id="payment-modal" class="fixed inset-0 z-[9999] hidden bg-black/95 backdrop-blur-xl overflow-y-auto px-4 py-12">
     <div class="min-h-full flex items-center justify-center">
         <div class="w-full max-w-sm bg-[#0a0a0a] border-2 border-blue-600 p-8 shadow-[0_0_100px_rgba(0,102,255,0.4)] relative text-center" style="clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);">
             
-            <div class="mb-10 border-b border-white/10 pb-6">
+            <div class="mb-10 border-b border-white/10 pb-6 text-center">
                 <span class="text-[10px] font-black text-blue-500 uppercase tracking-[0.5em]">MISSION DEPLOYMENT</span>
                 <h2 class="text-2xl font-black text-white uppercase italic mt-4" id="modal-pack-name">Pack Name</h2>
                 <div class="text-6xl font-black text-green-500 italic mt-2" id="modal-price">₹0</div>
@@ -274,7 +319,7 @@
                 <a id="pay-now-btn" href="#" target="_blank" class="btn-pay w-full py-6 text-sm uppercase shadow-[0_8px_0_#0044bb] active:translate-y-[4px] active:shadow-none transition-all">
                     Pay via UPI App
                 </a>
-                <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-6 leading-relaxed px-4">Direct Launch for PhonePe, GPay, Paytm</p>
+                <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-6 leading-relaxed px-4 text-center">Direct Launch: PhonePe, GPay, Paytm</p>
                 <p class="text-[8px] text-blue-400 mt-2 italic font-bold">Best performance on Chrome Mobile Browser</p>
             </div>
 
@@ -282,7 +327,7 @@
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=ApexSquads" alt="QR" class="w-40 h-40 mx-auto bg-white p-2 rounded-xl border-4 border-white/20">
                 <div class="bg-[#111] border border-white/10 p-3 flex justify-between items-center rounded-lg">
                     <span class="text-slate-300 font-mono text-[9px] truncate pr-4 text-left" id="upi-id-text">gamersindian21@okhdfcbank</span>
-                    <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase whitespace-nowrap">COPY</button>
+                    <button id="copy-btn" onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase whitespace-nowrap transition-colors">COPY</button>
                 </div>
             </div>
 
@@ -319,8 +364,8 @@
                                      onerror="this.src='https://placehold.co/400x400/111/white?text=OPERATOR'">
                                 <div class="absolute bottom-0 right-0 bg-blue-600 px-4 py-1 text-[10px] font-black uppercase">${status.toUpperCase()}</div>
                             </div>
-                            <h3 class="text-2xl font-black italic mb-2 uppercase">${name}</h3>
-                            <p class="text-slate-500 text-[11px] font-bold tracking-widest uppercase mb-10">${role}</p>
+                            <h3 class="text-2xl font-black italic mb-2 uppercase text-center">${name}</h3>
+                            <p class="text-slate-500 text-[11px] font-bold tracking-widest uppercase mb-10 text-center">${role}</p>
                             <a href="#services" class="btn-apex block w-full py-4 text-center text-sm">${isOnline ? 'Deploy Now' : 'Locked'}</a>
                         </div>
                     </div>`;
