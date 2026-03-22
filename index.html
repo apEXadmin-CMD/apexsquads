@@ -6,8 +6,7 @@
     
     <title>Apex Squads FF India | Safe Free Fire Rank Push Agency</title>
     <meta name="description" content="India's top paid Free Fire rank push agency. Hire Tier-1 pros for safe Grandmaster push. 100% Legit Operations.">
-    <meta name="keywords" content="Apex Squads FF India, Free Fire rank push agency, Paid FF Grandmaster push, Safe Free Fire rank push, FF rank push India, FF elite agency">
-
+    
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDF8CCYM41"></script>
@@ -32,17 +31,16 @@
         .crystal-shape { position: absolute; filter: blur(120px); border-radius: 50%; opacity: 0.3; animation: float 20s infinite alternate; }
         .shape-1 { width: 400px; height: 400px; background: #1e3a8a; top: -10%; left: -10%; }
         .shape-2 { width: 300px; height: 300px; background: #3b82f6; bottom: -10%; right: -10%; }
-        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(40px, 40px); } }
+        @keyframes float { 0% { transform: translate(0, 0); } 100% { transform: translate(30px, 30px); } }
 
         .glass-nav { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
         .pro-card { background: var(--apex-gray); border: 2px solid var(--apex-border); clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%); transition: 0.3s; }
-        .btn-apex { background: var(--apex-blue); color: white; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); transition: 0.3s; }
-        .btn-pay { background: linear-gradient(90deg, #0066ff, #00c2ff); color: white; font-weight: 900; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
+        .btn-apex { background: var(--apex-blue); color: white; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); }
+        .btn-pay { background: linear-gradient(90deg, #0066ff, #00c2ff); color: white; font-weight: 900; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%); transition: 0.3s; }
         
-        #mobile-menu { transition: max-height 0.4s ease-in-out; max-height: 0; overflow: hidden; }
-        #mobile-menu.active { max-height: 800px; border-bottom: 2px solid var(--apex-blue); }
+        #mobile-menu { transition: max-height 0.4s ease; max-height: 0; overflow: hidden; }
+        #mobile-menu.active { max-height: 600px; border-bottom: 2px solid var(--apex-blue); }
         body.modal-open { overflow: hidden !important; }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="antialiased">
@@ -79,6 +77,12 @@
           currentPack = packName; currentPrice = price;
           document.getElementById('modal-pack-name').innerText = packName;
           document.getElementById('modal-price').innerText = `₹${price}`;
+          
+          // 🚀 DIRECT ACTION LINK TRIGGER
+          const upiUrl = `upi://pay?pa=${MY_UPI_ID}&pn=ApexSquads&am=${price}&cu=INR`;
+          const payBtn = document.getElementById('pay-now-btn');
+          payBtn.setAttribute('href', upiUrl);
+
           document.getElementById('payment-modal').classList.remove('hidden');
           document.body.classList.add('modal-open');
       };
@@ -88,27 +92,13 @@
     }
   });
 
-  // 🚨 SMART REDIRECTION ENGINE 🚨
-  function triggerUPI() {
-      // Simplified protocol to ensure max compatibility
-      const upiUrl = `upi://pay?pa=${MY_UPI_ID}&pn=ApexSquads&am=${currentPrice}&cu=INR`;
-      
-      // Attempt redirection
-      window.location.assign(upiUrl);
-      
-      // Fallback for strict browsers
-      setTimeout(() => {
-          window.location.href = upiUrl;
-      }, 500);
-  }
-
   function closePaymentModal() { document.getElementById('payment-modal').classList.add('hidden'); document.body.classList.remove('modal-open'); }
   function copyUPI() { navigator.clipboard.writeText(MY_UPI_ID); alert("UPI ID Copied!"); }
   function toggleMobileMenu() { document.getElementById('mobile-menu').classList.toggle('active'); }
 
   function proceedToWhatsApp() {
       const phone = "918709233294"; 
-      const message = `🚀 PAYMENT CONFIRMED %0A%0AOperator: ${Clerk.user.firstName} %0APack: ${currentPack} %0APrice: ₹${currentPrice} %0A%0A*Sending screenshot for verification...*`;
+      const message = `🚀 MISSION PAYMENT %0A%0AOperator: ${Clerk.user.firstName} %0APack: ${currentPack} %0APrice: ₹${currentPrice} %0A%0A*Sending proof...*`;
       window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
       closePaymentModal();
   }
@@ -131,33 +121,33 @@
     </nav>
     <div id="mobile-menu" class="bg-[#0a0a0a] px-6 py-6 flex flex-col space-y-6 text-[12px] font-black tracking-widest text-slate-300">
         <a href="#services" onclick="toggleMobileMenu()">MISSION PACKS</a>
-        <a href="#proof" onclick="toggleMobileMenu()">WALL OF FAME</a>
+        <a href="#proof" onclick="toggleMobileMenu()">OPERATION PROOFS</a>
         <a href="#roster" onclick="toggleMobileMenu()">COMBAT ROSTER</a>
         <a href="#faq" onclick="toggleMobileMenu()">INTEL (FAQ)</a>
-        <a href="login.html" class="nav-login-link text-blue-400">AUTHORIZE</a>
-        <button class="nav-logout-link text-red-500 text-left" style="display: none;">DISCONNECT SYSTEM</button>
+        <a href="login.html" class="nav-login-link text-blue-400">AUTHORIZE SYSTEM</a>
+        <button class="nav-logout-link text-red-500 text-left" style="display: none;">DISCONNECT</button>
     </div>
 </header>
 
 <section class="max-w-4xl mx-auto pt-16 pb-16 px-6 text-center">
-    <div class="inline-block px-3 py-1 border border-yellow-500/30 rounded-full text-yellow-500 text-[9px] font-bold mb-6 tracking-[0.3em] uppercase italic">India's Premier Rank Agency</div>
+    <div class="inline-block px-3 py-1 border border-yellow-500/30 rounded-full text-yellow-500 text-[9px] font-bold mb-6 tracking-[0.2em] uppercase italic">India's Premier Rank Agency</div>
     <h1 class="text-5xl font-bold text-white mb-6 uppercase italic tracking-tighter">Reach the Peak.<br><span class="text-blue-600">Guaranteed.</span></h1>
     <p class="text-slate-400 text-sm max-w-xl mx-auto italic">Professional Free Fire rank push for India. Starter missions begin at ₹29.</p>
 </section>
 
-<section id="services" class="py-20 px-4 bg-[#050505] border-t border-white/5">
+<section id="services" class="py-20 px-4 bg-[#050505]">
     <div class="max-w-7xl mx-auto">
         <h2 class="text-3xl font-black uppercase italic text-white mb-8 border-l-4 border-blue-600 pl-4">Mission Packs</h2>
         
         <div class="flex gap-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-            <button onclick="filterPacks('all')" class="px-5 py-2 bg-blue-600 text-white font-black text-[9px] uppercase whitespace-nowrap">All</button>
+            <button onclick="filterPacks('all')" class="px-5 py-2 bg-blue-600 text-white font-black text-[9px] uppercase whitespace-nowrap">All Ops</button>
             <button onclick="filterPacks('rank')" class="px-5 py-2 bg-[#111] text-slate-400 font-black text-[9px] uppercase border border-white/5 whitespace-nowrap">Rank Points</button>
             <button onclick="filterPacks('duo')" class="px-5 py-2 bg-[#111] text-slate-400 font-black text-[9px] uppercase border border-white/5 whitespace-nowrap">Duo/Trio</button>
             <button onclick="filterPacks('squad')" class="px-5 py-2 bg-[#111] text-slate-400 font-black text-[9px] uppercase border border-white/5 whitespace-nowrap">Full Squad</button>
         </div>
 
         <div class="grid grid-cols-1 gap-4" id="pack-container">
-            <div class="pack-item rank bg-[#111] border-2 border-green-600/20 p-6">
+            <div class="pack-item rank bg-[#111] border-2 border-green-600/30 p-6">
                 <span class="text-green-500 font-black text-[9px] uppercase">Quick Trial</span>
                 <h3 class="text-xl font-black text-white uppercase italic mt-2">+10 Rank Points</h3>
                 <div class="mt-6 flex items-end justify-between"><div class="text-2xl font-black text-white italic">₹29</div><button onclick="openBooking('Quick Trial 10RP', 29)" class="btn-apex px-6 py-2 text-[10px]">Select</button></div>
@@ -172,22 +162,12 @@
                 <h3 class="text-xl font-black text-white uppercase italic mt-2">+200 Rank Points</h3>
                 <div class="mt-6 flex items-end justify-between"><div class="text-2xl font-black text-white italic">₹99</div><button onclick="openBooking('200 RP Push', 99)" class="btn-apex px-6 py-2 text-[10px]">Select</button></div>
             </div>
-            <div class="pack-item rank bg-[#111] border-2 border-blue-600/30 p-6">
-                <span class="text-red-500 font-black text-[9px] uppercase">Elite</span>
-                <h3 class="text-xl font-black text-white uppercase italic mt-2">+1000 Rank Points</h3>
-                <div class="mt-6 flex items-end justify-between"><div class="text-2xl font-black text-white italic">₹449</div><button onclick="openBooking('1000 RP Push', 449)" class="btn-apex px-6 py-2 text-[10px]">Select</button></div>
-            </div>
-            <div class="pack-item duo bg-[#111] border-2 border-green-600/20 p-6">
-                <span class="text-green-500 font-black text-[9px] uppercase">Trial Duo</span>
+            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-6">
+                <span class="text-cyan-500 font-black text-[9px] uppercase">Trial Duo</span>
                 <h3 class="text-xl font-black text-white uppercase italic mt-2">1 Duo Booyah</h3>
                 <div class="mt-6 flex items-end justify-between"><div class="text-2xl font-black text-white italic">₹49</div><button onclick="openBooking('1 Duo Booyah Trial', 49)" class="btn-apex px-6 py-2 text-[10px]">Select</button></div>
             </div>
-            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-6">
-                <span class="text-cyan-500 font-black text-[9px] uppercase">Trio Squad</span>
-                <h3 class="text-xl font-black text-white uppercase italic mt-2">5 Trio Booyahs</h3>
-                <div class="mt-6 flex items-end justify-between"><div class="text-2xl font-black text-white italic">₹299</div><button onclick="openBooking('5 Trio Booyahs', 299)" class="btn-apex px-6 py-2 text-[10px]">Select</button></div>
-            </div>
-            <div class="pack-item squad bg-[#111] border-2 border-red-600/40 p-6">
+            <div class="pack-item squad bg-[#111] border-2 border-red-600/30 p-6">
                 <span class="text-red-500 font-black text-[9px] uppercase">Full Squad</span>
                 <h3 class="text-xl font-black text-white uppercase italic mt-2">10 Squad Booyahs</h3>
                 <div class="mt-6 flex items-end justify-between"><div class="text-2xl font-black text-white italic">₹699</div><button onclick="openBooking('10 Squad Booyahs', 699)" class="btn-apex px-6 py-2 text-[10px]">Select</button></div>
@@ -196,18 +176,13 @@
     </div>
 </section>
 
-<section id="proof" class="py-20 px-6">
+<section id="proof" class="py-20 px-6 bg-[#020617]">
     <h2 class="text-3xl font-black text-white italic uppercase mb-8 border-l-4 border-blue-600 pl-4">Wall of Fame</h2>
     <div class="grid grid-cols-2 gap-3 mb-10">
-        <img src="img/booyah1.jpeg" class="rounded border border-white/10" alt="Proof">
-        <img src="img/booyah2.jpeg" class="rounded border border-white/10" alt="Proof">
-        <img src="img/booyah3.jpeg" class="rounded border border-white/10" alt="Proof">
-        <div class="bg-white/5 rounded border border-dashed border-white/10 flex items-center justify-center text-[10px] italic text-slate-500 p-4 text-center">Win scanning...</div>
-    </div>
-    <h2 class="text-center text-[9px] font-black uppercase text-slate-600 tracking-[0.5em] mb-6">Live Combat Feed</h2>
-    <div class="flex space-x-4 overflow-x-auto scrollbar-hide">
-        <img src="img/proof1.jpeg" class="h-40 rounded border border-white/10" alt="Push Proof">
-        <img src="img/proof2.jpeg" class="h-40 rounded border border-white/10" alt="Push Proof">
+        <img src="img/booyah1.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
+        <img src="img/booyah2.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
+        <img src="img/booyah3.jpeg" class="rounded border border-white/10 aspect-video object-cover" onerror="this.src='https://placehold.co/400x225/111/white?text=BOOYAH+PROOF'" alt="Proof">
+        <div class="bg-[#111] rounded border border-dashed border-white/10 flex items-center justify-center text-[9px] uppercase tracking-widest text-slate-500 p-4 text-center">Uploading next mission...</div>
     </div>
 </section>
 
@@ -217,44 +192,42 @@
 </section>
 
 <section id="faq" class="py-20 px-6 bg-[#050505] border-t border-white/5">
-    <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl font-black text-white uppercase italic mb-10 text-center tracking-tighter">Intel Briefing</h2>
-        <div class="space-y-6">
-            <div class="bg-[#111] p-6 border border-white/5 rounded-lg"><h3 class="text-blue-500 font-bold mb-2 uppercase text-xs">Is it account-safe?</h3><p class="text-slate-400 text-sm italic">Yes. We use manual pro-play. No hacks, no scripts. Your safety is our protocol.</p></div>
-            <div class="bg-[#111] p-6 border border-white/5 rounded-lg"><h3 class="text-blue-500 font-bold mb-2 uppercase text-xs">How do I verify payment?</h3><p class="text-slate-400 text-sm italic">After using the UPI redirect, click the WhatsApp button to send your screenshot for instant assignment.</p></div>
-        </div>
+    <h2 class="text-2xl font-black text-white uppercase italic mb-10 text-center tracking-widest">Intel Briefing</h2>
+    <div class="space-y-4">
+        <div class="bg-[#111] p-5 border border-white/5 rounded"><h4 class="text-blue-500 font-bold uppercase text-[10px] mb-2">Is it account safe?</h4><p class="text-slate-400 text-xs italic">100% manual play. No scripts or hacks. Safety is our protocol.</p></div>
+        <div class="bg-[#111] p-5 border border-white/5 rounded"><h4 class="text-blue-500 font-bold uppercase text-[10px] mb-2">How do I verify payment?</h4><p class="text-slate-400 text-xs italic">After UPI payment, click "Verify on WhatsApp" to send your receipt.</p></div>
     </div>
 </section>
 
 <footer class="py-10 bg-[#050505] text-center text-slate-600 text-[9px] tracking-[0.3em] px-6 uppercase">
-    © 2026 APEX SQUADS | INDIA'S ELITE FREE FIRE RANK AGENCY
+    © 2026 APEX SQUADS | INDIA'S ELITE FF AGENCY
 </footer>
 
 <div id="payment-modal" class="fixed inset-0 z-[9999] hidden bg-black/95 backdrop-blur-xl overflow-y-auto px-4 py-10">
     <div class="w-full max-w-sm mx-auto bg-[#0a0a0a] border-2 border-blue-600 p-8 shadow-[0_0_80px_rgba(0,102,255,0.4)] relative text-center" style="clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);">
         
-        <div class="mb-8 border-b border-white/10 pb-6">
+        <div class="mb-8 border-b border-white/10 pb-6 text-center">
             <span class="text-[9px] font-black text-blue-500 uppercase tracking-[0.5em]">MISSION DEPLOYMENT</span>
             <h2 class="text-2xl font-black text-white uppercase italic mt-2" id="modal-pack-name">Pack Name</h2>
             <div class="text-5xl font-black text-green-500 italic mt-2" id="modal-price">₹0</div>
         </div>
 
         <div id="upi-redirect-container" class="mb-8">
-            <button onclick="triggerUPI()" class="btn-pay w-full py-5 text-sm uppercase flex items-center justify-center shadow-[0_6px_0_#0044bb] active:translate-y-[3px] active:shadow-none transition-all">
+            <a id="pay-now-btn" href="#" class="btn-pay w-full py-5 text-sm uppercase flex items-center justify-center shadow-[0_6px_0_#0044bb] active:translate-y-[2px] active:shadow-none">
                 Pay via UPI App
-            </button>
-            <p class="text-[9px] text-slate-500 uppercase font-black tracking-widest mt-4">Safe & Instant Launch</p>
+            </a>
+            <p class="text-[8px] text-blue-400 mt-4 font-bold uppercase tracking-widest leading-relaxed">If button fails: Open link in CHROME browser or scan QR below.</p>
         </div>
 
         <div id="pc-scan-message" class="mb-8 hidden">
-            <p class="text-[10px] text-blue-400 font-black uppercase tracking-widest leading-relaxed">Scan QR with your phone to complete payment.</p>
+            <p class="text-[10px] text-blue-400 font-black uppercase tracking-widest">Scan QR with phone to pay.</p>
         </div>
 
         <div class="space-y-4 pt-8 border-t border-white/5">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=ApexSquads" alt="Scan QR" class="w-40 h-40 mx-auto bg-white p-2 rounded border-4 border-white/20">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=ApexSquads" alt="QR" class="w-40 h-40 mx-auto bg-white p-2 rounded border-4 border-white/20">
             <div class="bg-[#111] border border-white/10 p-3 flex justify-between items-center rounded-lg">
                 <span class="text-slate-300 font-mono text-[9px] truncate pr-2" id="upi-id-text">gamersindian21@okhdfcbank</span>
-                <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase whitespace-nowrap">COPY</button>
+                <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase">COPY</button>
             </div>
         </div>
 
@@ -262,8 +235,6 @@
             <button onclick="proceedToWhatsApp()" class="w-full py-5 bg-green-600/10 border-2 border-green-500 text-green-500 text-[11px] font-black uppercase">Verify on WhatsApp</button>
             <button onclick="closePaymentModal()" class="w-full py-4 bg-red-600 text-white text-[11px] font-black uppercase border-2 border-red-900 shadow-[0_5px_0_rgba(255,0,0,0.3)]">← ABORT MISSION</button>
         </div>
-        
-        <p class="mt-8 text-[8px] text-blue-400/50 uppercase font-bold italic tracking-widest leading-relaxed">Note: If buttons fail, please copy UPI ID and pay manually in your app.</p>
     </div>
 </div>
 
@@ -284,7 +255,8 @@
                     <div class="pro-card p-1">
                         <div class="bg-black p-6 h-full text-center">
                             <div class="relative mb-6 border-b-4 border-blue-600">
-                                <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}">
+                                <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}" 
+                                     onerror="this.src='https://placehold.co/400x400/111/white?text=OPERATOR+ICON'" alt="${name}">
                                 <div class="absolute bottom-0 right-0 bg-blue-600 px-4 py-1 text-[9px] font-black uppercase">${status.toUpperCase()}</div>
                             </div>
                             <h3 class="text-2xl font-black italic mb-1 uppercase">${name}</h3>
