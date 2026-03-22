@@ -99,7 +99,6 @@
           document.getElementById('modal-pack-name').innerText = packName;
           document.getElementById('modal-price').innerText = `₹${price}`;
           
-          // Device Check for UPI Redirection
           const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
           const upiRedirectContainer = document.getElementById('upi-redirect-container');
           const pcScanMessage = document.getElementById('pc-scan-message');
@@ -145,6 +144,17 @@
   function toggleMobileMenu() {
       document.getElementById('mobile-menu').classList.toggle('active');
   }
+
+  function filterPacks(category) {
+      const packs = document.querySelectorAll('.pack-item');
+      packs.forEach(pack => {
+          if (category === 'all' || pack.classList.contains(category)) {
+              pack.style.display = 'block';
+          } else {
+              pack.style.display = 'none';
+          }
+      });
+  }
 </script>
 
 <div class="crystal-bg"><div class="crystal-shape shape-1"></div><div class="crystal-shape shape-2"></div></div>
@@ -152,6 +162,7 @@
 <header class="glass-nav sticky top-0 z-50">
     <nav class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <h1 class="text-xl md:text-2xl font-black italic tracking-tighter text-blue-500 uppercase font-mono">APEX <span class="text-white">SQUADS</span></h1>
+        
         <div class="hidden md:flex items-center space-x-8 text-[10px] font-black tracking-[0.2em] text-slate-400">
             <a href="#services" class="hover:text-blue-400 transition">SERVICES</a>
             <a href="#roster" class="hover:text-blue-400 transition">ROSTER</a>
@@ -159,14 +170,15 @@
             <a href="login.html" class="nav-login-link border border-white/20 px-3 py-1">Authorize</a>
             <button class="nav-logout-link text-red-500 border border-red-500/30 px-3 py-1 uppercase" style="display: none;">Disconnect</button>
         </div>
+
         <button onclick="toggleMobileMenu()" class="md:hidden text-white p-2">
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
     </nav>
     <div id="mobile-menu" class="md:hidden bg-[#0a0a0a] px-6 py-4 flex flex-col space-y-4 text-[11px] font-black tracking-widest text-slate-300">
-        <a href="#services" onclick="toggleMobileMenu()">SERVICES</a>
-        <a href="#roster" onclick="toggleMobileMenu()">ROSTER</a>
-        <a href="#apply" onclick="toggleMobileMenu()">JOIN TEAM</a>
+        <a href="#services" onclick="toggleMobileMenu()" class="border-b border-white/5 pb-2">SERVICES</a>
+        <a href="#roster" onclick="toggleMobileMenu()" class="border-b border-white/5 pb-2">ROSTER</a>
+        <a href="#apply" onclick="toggleMobileMenu()" class="border-b border-white/5 pb-2">JOIN TEAM</a>
         <a href="login.html" class="nav-login-link text-blue-400">AUTHORIZE</a>
         <button class="nav-logout-link text-red-500 text-left" style="display: none;">DISCONNECT</button>
     </div>
@@ -175,20 +187,71 @@
 <section class="max-w-4xl mx-auto pt-20 pb-20 px-6 text-center">
     <div class="inline-block px-3 py-1 border border-yellow-500/30 rounded-full text-yellow-500 text-[10px] font-bold mb-6 tracking-[0.2em] uppercase italic">India's Elite FF Agency</div>
     <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight uppercase italic">Elite Rank Push. <br><span class="text-blue-600">Verified.</span></h1>
+    <p class="text-slate-400 text-md md:text-lg max-w-xl mx-auto">India's most affordable and secure Free Fire rank push agency. Start your journey for as low as ₹29.</p>
 </section>
 
 <section id="services" class="py-24 px-6 bg-[#050505]">
     <div class="max-w-7xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
-                <span class="text-green-500 font-black text-[10px] tracking-widest uppercase">Starter</span>
+        <div class="border-l-8 border-blue-600 pl-6 mb-16">
+            <h2 class="text-4xl md:text-5xl font-black uppercase italic tracking-tighter text-white">Mission Packs</h2>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-10 overflow-x-auto pb-2">
+            <button onclick="filterPacks('all')" class="px-6 py-3 bg-blue-600 text-white font-black text-[9px] uppercase tracking-widest whitespace-nowrap">All Ops</button>
+            <button onclick="filterPacks('rank')" class="px-6 py-3 bg-[#111] text-slate-500 font-black text-[9px] uppercase tracking-widest whitespace-nowrap border border-white/5">Rank Points</button>
+            <button onclick="filterPacks('duo')" class="px-6 py-3 bg-[#111] text-slate-500 font-black text-[9px] uppercase tracking-widest whitespace-nowrap border border-white/5">Duo/Trio</button>
+            <button onclick="filterPacks('squad')" class="px-6 py-3 bg-[#111] text-slate-500 font-black text-[9px] uppercase tracking-widest whitespace-nowrap border border-white/5">Full Squad</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pack-container">
+            
+            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all border-green-600/30">
+                <span class="text-green-500 font-black text-[10px] tracking-widest uppercase">Quick Trial</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">+10 Rank Points</h3>
+                <p class="text-slate-500 text-[10px] mt-2 uppercase">Instant Verification Match</p>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹29</div><button onclick="openBooking('Quick Trial 10RP', 29)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
+            </div>
+
+            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-blue-500 font-black text-[10px] tracking-widest uppercase">Starter</span>
                 <h3 class="text-2xl font-black text-white uppercase italic mt-4">+50 Rank Points</h3>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹49</div><button onclick="openBooking('Starter Push 50RP', 49)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
             </div>
-            <div class="bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+
+            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
                 <span class="text-blue-500 font-black text-[10px] tracking-widest uppercase">Standard</span>
                 <h3 class="text-2xl font-black text-white uppercase italic mt-4">+200 Rank Points</h3>
                 <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹99</div><button onclick="openBooking('200 RP Push', 99)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
+            </div>
+
+            <div class="pack-item rank bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-red-600 font-black text-[10px] tracking-widest uppercase">Elite Push</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">+1000 Rank Points</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹449</div><button onclick="openBooking('1000 RP Push', 449)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
+            </div>
+
+            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all border-green-600/20">
+                <span class="text-green-500 font-black text-[10px] tracking-widest uppercase">Trial Duo</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">1 Duo Booyah</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹49</div><button onclick="openBooking('1 Duo Booyah Trial', 49)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
+            </div>
+
+            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-cyan-500 font-black text-[10px] tracking-widest uppercase">Professional Duo</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">3 Duo Booyahs</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹129</div><button onclick="openBooking('3 Duo Booyahs', 129)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
+            </div>
+
+            <div class="pack-item duo bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-indigo-500 font-black text-[10px] tracking-widest uppercase">Trio Squad</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">5 Trio Booyahs</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹299</div><button onclick="openBooking('5 Trio Booyahs', 299)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
+            </div>
+
+            <div class="pack-item squad bg-[#111] border-2 border-white/5 p-8 group hover:border-blue-600 transition-all">
+                <span class="text-red-500 font-black text-[10px] tracking-widest uppercase">Full Squad</span>
+                <h3 class="text-2xl font-black text-white uppercase italic mt-4">10 Squad Booyahs</h3>
+                <div class="mt-8 flex items-end justify-between"><div class="text-3xl font-black text-white italic">₹699</div><button onclick="openBooking('10 Squad Booyahs', 699)" class="btn-apex px-6 py-3 text-[10px]">Select</button></div>
             </div>
         </div>
     </div>
@@ -230,9 +293,9 @@
                 <div class="bg-white p-2 mx-auto w-40 h-40 rounded border-4 border-white/20">
                     <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=gamersindian21@okhdfcbank&pn=ApexSquads" alt="QR" class="w-full h-full">
                 </div>
-                <div class="bg-[#111] border border-white/10 p-3 flex justify-between items-center rounded-lg">
+                <div class="bg-[#111] border border-white/10 p-3 flex justify-between items-center rounded-lg text-left">
                     <span class="text-slate-300 font-mono text-[9px] truncate pr-2" id="upi-id-text">gamersindian21@okhdfcbank</span>
-                    <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase">COPY</button>
+                    <button onclick="copyUPI()" class="text-blue-500 text-[10px] font-black uppercase whitespace-nowrap">COPY</button>
                 </div>
             </div>
 
@@ -251,28 +314,30 @@
 <script>
     const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRRMUb3ZaZXQW1sZLKT7ooWqVnTbdDnh5FS4pBtsQ7RU0YCMgx-kTgHGFLgSPdjVK4uV90eqAM2tk44/pub?output=csv"; 
     async function loadRoster() {
-        const response = await fetch(SHEET_URL);
-        const data = await response.text();
-        const rows = data.split("\n").slice(1);
-        const grid = document.getElementById("roster-grid");
-        grid.innerHTML = "";
-        rows.forEach(row => {
-            const [name, role, status, image] = row.split(",");
-            if(!name) return;
-            const isOnline = status.trim().toUpperCase() === "ONLINE";
-            grid.innerHTML += `
-                <div class="pro-card p-1">
-                    <div class="bg-black p-6 h-full text-center">
-                        <div class="relative mb-6 border-b-4 border-blue-600">
-                            <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}">
-                            <div class="absolute bottom-0 right-0 bg-blue-600 px-4 py-1 text-[9px] font-black uppercase">${status.toUpperCase()}</div>
+        try {
+            const response = await fetch(SHEET_URL);
+            const data = await response.text();
+            const rows = data.split("\n").slice(1);
+            const grid = document.getElementById("roster-grid");
+            grid.innerHTML = "";
+            rows.forEach(row => {
+                const [name, role, status, image] = row.split(",");
+                if(!name) return;
+                const isOnline = status.trim().toUpperCase() === "ONLINE";
+                grid.innerHTML += `
+                    <div class="pro-card p-1">
+                        <div class="bg-black p-6 h-full text-center">
+                            <div class="relative mb-6 border-b-4 border-blue-600">
+                                <img src="img/${image.trim()}" class="w-full aspect-square object-cover ${isOnline ? '' : 'grayscale'}" alt="${name}">
+                                <div class="absolute bottom-0 right-0 bg-blue-600 px-4 py-1 text-[9px] font-black uppercase">${status.toUpperCase()}</div>
+                            </div>
+                            <h3 class="text-2xl font-black italic mb-1 uppercase">${name}</h3>
+                            <p class="text-slate-500 text-[10px] font-bold tracking-widest uppercase mb-8">${role}</p>
+                            <a href="#services" class="btn-apex block w-full py-4 text-center text-sm">${isOnline ? 'Deploy Now' : 'Locked'}</a>
                         </div>
-                        <h3 class="text-2xl font-black italic mb-1 uppercase">${name}</h3>
-                        <p class="text-slate-500 text-[10px] font-bold tracking-widest uppercase mb-8">${role}</p>
-                        <a href="#services" class="btn-apex block w-full py-4 text-center text-sm">${isOnline ? 'Deploy Now' : 'Locked'}</a>
-                    </div>
-                </div>`;
-        });
+                    </div>`;
+            });
+        } catch (e) { console.log("Roster sheet not found yet."); }
     }
     loadRoster();
 </script>
